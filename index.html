@@ -3,1654 +3,1242 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NBEP — National Bureau of Exploitation Protection | Secure Archive Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <title>NBEP Document Archive | National Bureau of Exploitation Protection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
-    /* ─── CORE VARIABLES ─────────────────────────────────────────────────── */
+    /* ================================================================
+       NBEP ARCHIVE PORTAL
+       Design reference: U.S. Web Design System (USWDS) 3.x
+       Modeled after: archives.gov, justice.gov, dhs.gov
+       Last updated: February 28, 2026
+    ================================================================ */
+
+    /* ── RESET & BASE ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg-primary:       #070809;
-      --bg-secondary:     #0b0d0f;
-      --bg-tertiary:      #0f1215;
-      --bg-panel:         #111518;
-      --bg-card:          #13171b;
-      --bg-card-hover:    #181d22;
-      --bg-input:         #0d1014;
+      /* Primary palette – U.S. Government Navy */
+      --navy:          #1b2a4a;
+      --navy-dark:     #112035;
+      --navy-light:    #2d4270;
+      --navy-faint:    #e8ecf5;
 
-      --border-faint:     #1a1f26;
-      --border-normal:    #222930;
-      --border-strong:    #2e3740;
-      --border-accent:    #b89a3e;
+      /* Accent – Institutional Gold */
+      --gold:          #8b6914;
+      --gold-light:    #f5e9c8;
+      --gold-border:   #d4a017;
 
-      --gold-deep:        #8a6e24;
-      --gold-mid:         #b89a3e;
-      --gold-bright:      #d4b45a;
-      --gold-highlight:   #edd97a;
+      /* Grays */
+      --gray-5:        #f5f5f5;
+      --gray-10:       #ebebeb;
+      --gray-20:       #d6d7d9;
+      --gray-30:       #b8bcc2;
+      --gray-50:       #757678;
+      --gray-70:       #454545;
+      --gray-90:       #1b1b1b;
 
-      --text-primary:     #d4d8de;
-      --text-secondary:   #8a9099;
-      --text-muted:       #515b66;
-      --text-faint:       #2e3740;
+      /* Status colors */
+      --green-bg:      #ecf3ec;
+      --green-border:  #2e8540;
+      --green-text:    #1a4d27;
 
-      --red-dark:         #5c1a1a;
-      --red-mid:          #9b2e2e;
-      --red-bright:       #cc4444;
-      --red-text:         #e06060;
+      --red-bg:        #fbe9e9;
+      --red-border:    #d42b2b;
+      --red-text:      #8b0a0a;
 
-      --green-dark:       #0e2e1a;
-      --green-mid:        #1e5c35;
-      --green-bright:     #2d8c50;
-      --green-text:       #4ecb72;
+      --blue-bg:       #e7f0f9;
+      --blue-border:   #205493;
+      --blue-text:     #112f5c;
 
-      --blue-dark:        #0d1a2e;
-      --blue-mid:         #1a3a6e;
-      --blue-text:        #5a9ee0;
+      --yellow-bg:     #fef7e4;
+      --yellow-border: #d4a017;
+      --yellow-text:   #7a4800;
 
-      --font-mono:        'IBM Plex Mono', monospace;
-      --font-cond:        'IBM Plex Sans Condensed', sans-serif;
-      --font-body:        'IBM Plex Sans', sans-serif;
+      /* Layout */
+      --max-width:     1200px;
+      --sidebar-w:     240px;
 
-      --sidebar-w:        260px;
-      --header-h:         68px;
-      --banner-h:         28px;
-      --ticker-h:         30px;
-      --nav-tabs-h:       44px;
+      /* Typography */
+      --font-sans:     'Source Sans 3', 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+      --font-serif:    'Merriweather', Georgia, 'Times New Roman', serif;
     }
 
-    /* ─── RESET ──────────────────────────────────────────────────────────── */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-    }
-
-    html { scroll-behavior: smooth; }
+    html { font-size: 16px; }
 
     body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    ::selection {
-      background: rgba(184,154,62,0.3);
-      color: var(--gold-highlight);
-    }
-
-    /* ─── SCROLLBAR ──────────────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-primary); }
-    ::-webkit-scrollbar-thumb {
-      background: var(--border-strong);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--gold-deep); }
-
-    /* ─── SCANLINES ──────────────────────────────────────────────────────── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        180deg,
-        transparent 0px,
-        transparent 3px,
-        rgba(0,0,0,0.04) 3px,
-        rgba(0,0,0,0.04) 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ─── CLASSIFICATION BANNERS ─────────────────────────────────────────── */
-    .classif-top, .classif-bottom {
-      height: var(--banner-h);
-      background: #1a0606;
-      border-bottom: 1px solid var(--red-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      font-family: var(--font-cond);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      color: var(--red-text);
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .classif-bottom {
-      border-top: 1px solid var(--red-dark);
-      border-bottom: none;
-    }
-
-    .classif-top::before, .classif-bottom::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -60deg,
-        transparent 0px,
-        transparent 14px,
-        rgba(176,48,48,0.05) 14px,
-        rgba(176,48,48,0.05) 28px
-      );
-    }
-
-    .classif-top .divider, .classif-bottom .divider {
-      color: var(--red-dark);
-      font-size: 8px;
-    }
-
-    /* ─── TICKER ─────────────────────────────────────────────────────────── */
-    .ticker-bar {
-      height: var(--ticker-h);
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-faint);
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .ticker-label {
-      flex-shrink: 0;
-      background: var(--gold-deep);
-      color: var(--bg-primary);
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      padding: 0 12px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-      border-right: 2px solid var(--gold-mid);
-      z-index: 2;
-    }
-
-    .ticker-track {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .ticker-content {
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      animation: ticker 42s linear infinite;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-secondary);
-      letter-spacing: 0.05em;
-      gap: 0;
-    }
-
-    .ticker-content .tick-item { padding: 0 2rem; }
-    .ticker-content .tick-sep {
-      color: var(--text-faint);
-      padding: 0 0.5rem;
-    }
-
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ─── HEADER ─────────────────────────────────────────────────────────── */
-    header {
-      height: var(--header-h);
-      background: var(--bg-panel);
-      border-bottom: 1px solid var(--border-normal);
-      display: grid;
-      grid-template-columns: var(--sidebar-w) 1fr auto;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 500;
-      box-shadow: 0 2px 24px rgba(0,0,0,0.6);
-    }
-
-    .header-brand {
-      padding: 0 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      border-right: 1px solid var(--border-faint);
-      height: 100%;
-    }
-
-    .brand-seal {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid var(--gold-mid);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      background: radial-gradient(circle at center, rgba(184,154,62,0.08) 0%, transparent 70%);
-    }
-
-    .brand-seal::after {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      border-radius: 50%;
-      border: 1px solid rgba(184,154,62,0.15);
-    }
-
-    .brand-seal-text {
-      font-family: var(--font-cond);
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--gold-bright);
-      letter-spacing: 0.05em;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .brand-info { line-height: 1.25; }
-
-    .brand-name {
-      font-family: var(--font-cond);
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--gold-bright);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .brand-full {
-      font-family: var(--font-body);
-      font-size: 10px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
       font-weight: 400;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
+      color: var(--gray-90);
+      background: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .header-center {
-      padding: 0 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
+    a { color: var(--navy); text-decoration: underline; }
+    a:hover { color: var(--navy-light); }
+    img { max-width: 100%; }
+
+    /* ── GOV BANNER ───────────────────────────────────────────────── */
+    .gov-banner {
+      background: var(--gray-5);
+      border-bottom: 1px solid var(--gray-20);
+      font-size: 0.8rem;
     }
 
-    .header-portal-id {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-    }
-
-    .header-portal-id strong {
-      color: var(--gold-mid);
-      font-weight: 500;
-    }
-
-    .header-sep {
-      width: 1px;
-      height: 24px;
-      background: var(--border-faint);
-    }
-
-    .header-status-cluster {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .status-dot.online  { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); animation: pulse-green 2.5s ease-in-out infinite; }
-    .status-dot.warn    { background: #d4a030; box-shadow: 0 0 6px #d4a030; animation: pulse-gold 2s ease-in-out infinite; }
-
-    @keyframes pulse-green {
-      0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--green-bright); }
-      50%       { opacity: 0.5; box-shadow: 0 0 2px var(--green-bright); }
-    }
-
-    @keyframes pulse-gold {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
-    }
-
-    .status-badge.online { color: var(--green-text); }
-    .status-badge.warn   { color: #d4a030; }
-
-    .header-right {
-      padding: 0 1.5rem;
-      text-align: right;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      border-left: 1px solid var(--border-faint);
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .header-clock { color: var(--text-secondary); }
-    .header-session { color: var(--text-faint); font-size: 9px; }
-
-    /* ─── NAV TABS ───────────────────────────────────────────────────────── */
-    .nav-tabs-bar {
-      height: var(--nav-tabs-h);
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-faint);
-      display: flex;
-      align-items: stretch;
-      padding: 0 calc(var(--sidebar-w) + 0px);
-      gap: 0;
-      position: sticky;
-      top: var(--header-h);
-      z-index: 490;
-    }
-
-    .nav-tab {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s ease;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .nav-tab:hover { color: var(--text-secondary); background: rgba(255,255,255,0.02); }
-
-    .nav-tab.active {
-      color: var(--gold-bright);
-      border-bottom-color: var(--gold-mid);
-      background: rgba(184,154,62,0.04);
-    }
-
-    .nav-tab .tab-count {
-      background: var(--border-normal);
-      color: var(--text-muted);
-      font-size: 9px;
-      padding: 1px 5px;
-      border-radius: 2px;
-    }
-
-    .nav-tab.active .tab-count {
-      background: rgba(184,154,62,0.2);
-      color: var(--gold-mid);
-    }
-
-    /* ─── MAIN LAYOUT ────────────────────────────────────────────────────── */
-    .layout {
-      display: grid;
-      grid-template-columns: var(--sidebar-w) 1fr;
-      min-height: calc(100vh - var(--header-h) - var(--banner-h) * 2 - var(--ticker-h) - var(--nav-tabs-h) - 36px);
-    }
-
-    /* ─── SIDEBAR ────────────────────────────────────────────────────────── */
-    .sidebar {
-      background: var(--bg-panel);
-      border-right: 1px solid var(--border-faint);
-      padding-top: 1.25rem;
-      position: sticky;
-      top: calc(var(--header-h) + var(--nav-tabs-h));
-      height: calc(100vh - var(--header-h) - var(--nav-tabs-h));
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sidebar-section { margin-bottom: 1.5rem; }
-
-    .sidebar-section-label {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text-faint);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      padding: 0 1.25rem 0.5rem;
-    }
-
-    .sidebar-nav-item {
+    .gov-banner-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.35rem 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.5rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-left: 2px solid transparent;
-      transition: all 0.12s ease;
-      user-select: none;
+      color: var(--gray-70);
     }
 
-    .sidebar-nav-item:hover {
-      color: var(--text-secondary);
-      background: rgba(255,255,255,0.02);
-      border-left-color: var(--border-strong);
+    .gov-flag {
+      width: 20px; height: 13px;
+      background: linear-gradient(180deg,
+        #B22234 0%,#B22234 7.7%,#fff 7.7%,#fff 15.4%,
+        #B22234 15.4%,#B22234 23.1%,#fff 23.1%,#fff 30.8%,
+        #B22234 30.8%,#B22234 38.5%,#fff 38.5%,#fff 46.2%,
+        #B22234 46.2%,#B22234 53.8%,#fff 53.8%,#fff 61.5%,
+        #B22234 61.5%,#B22234 69.2%,#fff 69.2%,#fff 76.9%,
+        #B22234 76.9%,#B22234 84.6%,#fff 84.6%,#fff 92.3%,
+        #B22234 92.3%,#B22234 100%);
+      border: 1px solid #999;
+      border-radius: 1px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
     }
 
-    .sidebar-nav-item.active {
-      color: var(--gold-bright);
-      background: rgba(184,154,62,0.05);
-      border-left-color: var(--gold-mid);
+    .gov-flag::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 38%; height: 54%;
+      background: #3C3B6E;
     }
 
-    .sidebar-nav-item .nav-icon { font-size: 12px; flex-shrink: 0; }
+    .gov-banner-text strong { font-weight: 600; }
 
-    .sidebar-nav-item .nav-count {
+    .gov-banner-lock {
+      font-size: 0.7rem;
       margin-left: auto;
-      font-size: 9px;
-      background: var(--border-faint);
-      color: var(--text-faint);
-      padding: 1px 5px;
-      border-radius: 2px;
-      letter-spacing: 0;
-    }
-
-    .sidebar-nav-item.active .nav-count {
-      background: rgba(184,154,62,0.15);
-      color: var(--gold-mid);
-    }
-
-    .sidebar-divider {
-      height: 1px;
-      background: var(--border-faint);
-      margin: 0.75rem 1.25rem;
-    }
-
-    /* Sidebar info panel */
-    .sidebar-info-panel {
-      margin: 0 1rem 1rem;
-      border: 1px solid var(--border-faint);
-      border-radius: 3px;
-      padding: 0.9rem;
-      background: var(--bg-tertiary);
-    }
-
-    .sip-title {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text-faint);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-faint);
-    }
-
-    .sip-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.3rem;
-      font-family: var(--font-mono);
-      font-size: 10px;
+      gap: 4px;
+      color: var(--gray-50);
     }
 
-    .sip-key { color: var(--text-faint); }
-    .sip-val { color: var(--text-secondary); }
-    .sip-val.gold { color: var(--gold-mid); }
-    .sip-val.green { color: var(--green-text); }
-    .sip-val.red { color: var(--red-text); }
-
-    .sidebar-push { flex: 1; }
-
-    .sidebar-footer {
-      padding: 0.75rem 1.25rem;
-      border-top: 1px solid var(--border-faint);
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--text-faint);
-      line-height: 1.6;
+    /* ── SITE HEADER ──────────────────────────────────────────────── */
+    .site-header {
+      background: var(--navy);
+      color: #fff;
+      border-bottom: 4px solid var(--gold-border);
     }
 
-    .sidebar-footer .sf-version { color: var(--text-muted); }
-
-    /* ─── MAIN CONTENT ───────────────────────────────────────────────────── */
-    .main-content {
-      padding: 2rem 2.5rem;
-      min-width: 0;
-    }
-
-    /* Page header row */
-    .page-header {
+    .site-header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.1rem 1.5rem;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border-faint);
+      gap: 1.5rem;
     }
 
-    .page-header-left {}
-
-    .page-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text-faint);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
+    .site-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .page-title {
-      font-family: var(--font-cond);
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--gold-bright);
+    .site-header-brand:hover { color: #fff; text-decoration: none; }
+
+    .brand-emblem {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.6rem;
+    }
+
+    .brand-dept {
+      font-size: 0.7rem;
+      font-weight: 400;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      line-height: 1.1;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1px;
     }
 
-    .page-desc {
-      font-family: var(--font-body);
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 0.4rem;
-      letter-spacing: 0.03em;
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
     }
 
-    .page-header-right {
+    .brand-sub {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      margin-top: 1px;
+    }
+
+    .site-header-meta {
+      text-align: right;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+
+    .site-header-meta .clock {
+      color: rgba(255,255,255,0.85);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── PRIMARY NAV ──────────────────────────────────────────────── */
+    .primary-nav { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+    .primary-nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.4rem;
+      align-items: stretch;
     }
 
-    .meta-chip {
+    .primary-nav-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
-      background: var(--bg-card);
-      border: 1px solid var(--border-faint);
-      border-radius: 2px;
-      padding: 4px 10px;
+      gap: 0.4rem;
+      padding: 0.75rem 1.1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      user-select: none;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
-    .meta-chip .mc-label { color: var(--text-faint); }
+    .primary-nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); text-decoration: none; }
 
-    /* ─── STATS BAR ──────────────────────────────────────────────────────── */
-    .stats-row {
+    .primary-nav-item.active {
+      color: #fff;
+      border-bottom-color: var(--gold-border);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-badge {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 10px;
+    }
+
+    .primary-nav-item.active .nav-badge {
+      background: rgba(212,160,23,0.25);
+      color: #f5ca60;
+    }
+
+    /* ── BREADCRUMB ───────────────────────────────────────────────── */
+    .breadcrumb-bar { background: var(--gray-5); border-bottom: 1px solid var(--gray-20); }
+
+    .breadcrumb-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8rem;
+      color: var(--gray-50);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-inner .bc { color: var(--navy); cursor: pointer; text-decoration: underline; }
+    .breadcrumb-inner .bc:hover { color: var(--navy-light); }
+    .breadcrumb-inner .bc-sep { color: var(--gray-30); font-size: 0.7rem; }
+    .breadcrumb-inner .bc-current { color: var(--gray-70); font-weight: 600; text-decoration: none; cursor: default; }
+
+    /* ── MAIN LAYOUT ──────────────────────────────────────────────── */
+    .page-wrapper {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── LEFT SIDEBAR ─────────────────────────────────────────────── */
+    .sidebar { position: sticky; top: 1.5rem; }
+
+    .sidebar-section { margin-bottom: 2rem; }
+
+    .sidebar-heading {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-50);
+      padding: 0 0 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--gray-20);
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--gray-70);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+      transition: all 0.12s;
+    }
+
+    .sidebar-link:hover { color: var(--navy); background: var(--navy-faint); border-left-color: var(--navy-light); text-decoration: none; }
+
+    .sidebar-link.active { color: var(--navy); font-weight: 600; background: var(--navy-faint); border-left-color: var(--navy); }
+
+    .sidebar-link .sl-count {
+      margin-left: auto;
+      font-size: 0.7rem;
+      background: var(--gray-10);
+      color: var(--gray-50);
+      border-radius: 8px;
+      padding: 0 6px;
+    }
+
+    .sidebar-link.active .sl-count { background: var(--navy-faint); color: var(--navy); }
+
+    .sidebar-info-box {
+      background: var(--gray-5);
+      border: 1px solid var(--gray-20);
+      border-radius: 4px;
+      padding: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .sib-title {
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-50);
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--gray-20);
+    }
+
+    .sib-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.2rem 0;
+      border-bottom: 1px solid var(--gray-10);
+      font-size: 0.8rem;
+    }
+
+    .sib-row:last-child { border-bottom: none; }
+    .sib-key { color: var(--gray-50); }
+    .sib-val { font-weight: 600; color: var(--gray-90); }
+    .sib-val.green { color: var(--green-text); }
+    .sib-val.red   { color: var(--red-text);   }
+    .sib-val.gold  { color: var(--gold);        }
+
+    /* ── MAIN CONTENT ─────────────────────────────────────────────── */
+    .main { min-width: 0; }
+
+    /* ── VIEWS ────────────────────────────────────────────────────── */
+    .view { display: none; }
+    .view.active { display: block; animation: fadeSlide 0.18s ease forwards; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE TITLE BLOCK ─────────────────────────────────────────── */
+    .page-title-block {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--gray-10);
+    }
+
+    .page-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-50);
+      margin-bottom: 0.3rem;
+    }
+
+    .page-h1 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-lead { font-size: 1rem; color: var(--gray-70); max-width: 680px; }
+
+    .page-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .page-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--gray-50);
+    }
+
+    .page-meta-item strong { color: var(--gray-70); font-weight: 600; }
+
+    /* ── ALERT / NOTICE ───────────────────────────────────────────── */
+    .alert {
+      display: flex;
+      gap: 0.75rem;
+      border-radius: 3px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-left: 4px solid;
+    }
+
+    .alert-info    { background: var(--blue-bg);   border-left-color: var(--blue-border);   color: var(--blue-text);   }
+    .alert-warning { background: var(--yellow-bg); border-left-color: var(--yellow-border); color: var(--yellow-text); }
+    .alert-error   { background: var(--red-bg);    border-left-color: var(--red-border);    color: var(--red-text);    }
+    .alert-success { background: var(--green-bg);  border-left-color: var(--green-border);  color: var(--green-text);  }
+
+    .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .alert strong { font-weight: 700; }
+
+    /* ── STATS ROW ────────────────────────────────────────────────── */
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 2rem;
     }
 
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-faint);
-      border-radius: 3px;
-      padding: 1rem 1.25rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.15s;
+    .stat-tile {
+      border: 1px solid var(--gray-20);
+      border-radius: 4px;
+      padding: 1rem 1.1rem;
+      background: #fff;
+      border-top-width: 3px;
     }
 
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-    }
+    .stat-tile.navy  { border-top-color: var(--navy); }
+    .stat-tile.green { border-top-color: var(--green-border); }
+    .stat-tile.red   { border-top-color: var(--red-border); }
+    .stat-tile.gold  { border-top-color: var(--gold-border); }
 
-    .stat-card.gold::before  { background: var(--gold-mid); }
-    .stat-card.green::before { background: var(--green-bright); }
-    .stat-card.red::before   { background: var(--red-bright); }
-    .stat-card.blue::before  { background: var(--blue-text); }
-
-    .stat-card:hover { border-color: var(--border-strong); }
-
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--text-faint);
-      letter-spacing: 0.2em;
+    .stat-tile-label {
+      font-size: 0.7rem;
+      font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+      color: var(--gray-50);
+      margin-bottom: 0.35rem;
     }
 
-    .stat-value {
-      font-family: var(--font-cond);
-      font-size: 28px;
+    .stat-tile-value {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
       font-weight: 700;
       line-height: 1;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
     }
 
-    .stat-card.gold  .stat-value { color: var(--gold-bright); }
-    .stat-card.green .stat-value { color: var(--green-text); }
-    .stat-card.red   .stat-value { color: var(--red-text); }
-    .stat-card.blue  .stat-value { color: var(--blue-text); }
+    .stat-tile.navy  .stat-tile-value { color: var(--navy); }
+    .stat-tile.green .stat-tile-value { color: var(--green-text); }
+    .stat-tile.red   .stat-tile-value { color: var(--red-text); }
+    .stat-tile.gold  .stat-tile-value { color: var(--gold); }
 
-    .stat-sub {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
+    .stat-tile-sub { font-size: 0.78rem; color: var(--gray-50); }
+
+    /* ── SECTION HEADING ──────────────────────────────────────────── */
+    .section-h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray-50);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--gray-20);
     }
 
-    /* ─── FOLDER GRID ────────────────────────────────────────────────────── */
-    .view { display: none; }
-    .view.active { display: block; animation: fadeUp 0.2s ease forwards; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    /* ── FOLDER GRID ──────────────────────────────────────────────── */
     .folder-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
+      margin-bottom: 2rem;
     }
 
     .folder-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-normal);
+      border: 1px solid var(--gray-20);
       border-radius: 4px;
-      padding: 1.4rem 1.25rem 1.25rem;
+      padding: 1.25rem 1.25rem 1.1rem;
+      background: #fff;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.18s ease;
-    }
-
-    .folder-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at top left, rgba(184,154,62,0.04) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .folder-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
-      transform: scaleX(0);
-      transition: transform 0.25s ease;
-    }
-
-    .folder-card:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--gold-deep);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(184,154,62,0.1);
-    }
-
-    .folder-card:hover::before { opacity: 1; }
-    .folder-card:hover::after  { transform: scaleX(1); }
-
-    .folder-card-badge {
-      position: absolute;
-      top: 0.7rem; right: 0.7rem;
-      font-family: var(--font-mono);
-      font-size: 8px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 2px;
-    }
-
-    .badge-empty      { background: rgba(255,255,255,0.03); color: var(--text-faint);  border: 1px solid var(--border-faint);  }
-    .badge-restricted { background: rgba(156,44,44,0.15);  color: var(--red-text);    border: 1px solid var(--red-dark);      }
-    .badge-ceo        { background: rgba(184,154,62,0.12); color: var(--gold-bright); border: 1px solid var(--gold-deep);     }
-    .badge-active     { background: rgba(45,140,80,0.12);  color: var(--green-text);  border: 1px solid var(--green-mid);     }
-
-    .folder-card-icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.75rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      text-decoration: none;
       display: block;
-      filter: drop-shadow(0 0 8px rgba(184,154,62,0.2));
-      transition: filter 0.2s;
+      color: inherit;
     }
 
-    .folder-card:hover .folder-card-icon {
-      filter: drop-shadow(0 0 12px rgba(184,154,62,0.4));
+    .folder-card:hover { border-color: var(--navy-light); box-shadow: 0 2px 10px rgba(27,42,74,0.1); text-decoration: none; color: inherit; }
+
+    .folder-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
     }
+
+    .folder-icon-wrap {
+      width: 36px; height: 36px;
+      background: var(--navy-faint);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .folder-status-chip {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .chip-empty      { background: var(--gray-10);  color: var(--gray-50);   }
+    .chip-active     { background: var(--green-bg); color: var(--green-text);}
+    .chip-ceo        { background: var(--gold-light);color: var(--gold);     }
+    .chip-restricted { background: var(--red-bg);   color: var(--red-text);  }
 
     .folder-card-name {
-      font-family: var(--font-cond);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
       margin-bottom: 0.3rem;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
-    .folder-card-meta {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
+    .folder-card-desc {
+      font-size: 0.825rem;
+      color: var(--gray-70);
       line-height: 1.5;
+      margin-bottom: 0.6rem;
     }
 
-    .folder-card-meta .doc-count {
-      color: var(--gold-mid);
-      font-weight: 500;
+    .folder-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.775rem;
+      color: var(--gray-50);
     }
 
-    .folder-card-arrow {
-      position: absolute;
-      bottom: 1rem; right: 1rem;
-      font-size: 12px;
-      color: var(--text-faint);
-      transition: all 0.15s;
-    }
+    .folder-card-footer .doc-count { font-weight: 600; color: var(--navy); }
 
-    .folder-card:hover .folder-card-arrow {
-      color: var(--gold-mid);
-      transform: translateX(3px);
-    }
+    .folder-card-arrow { color: var(--navy); font-size: 0.75rem; font-weight: 700; opacity: 0; transition: opacity 0.15s; }
+    .folder-card:hover .folder-card-arrow { opacity: 1; }
 
-    /* ─── FOLDER VIEW ────────────────────────────────────────────────────── */
+    /* ── FOLDER VIEW HEADER ───────────────────────────────────────── */
     .folder-view-header {
       display: flex;
       align-items: center;
       gap: 1rem;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border-faint);
+      border-bottom: 2px solid var(--gray-10);
     }
 
     .btn-back {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--text-secondary);
-      background: none;
-      border: 1px solid var(--border-normal);
-      padding: 6px 12px;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.12s;
-      font-weight: 400;
-    }
-
-    .btn-back:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-strong);
-      color: var(--text-primary);
-    }
-
-    .folder-view-title-block { flex: 1; }
-
-    .folder-view-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--text-faint);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-
-    .folder-view-title {
-      font-family: var(--font-cond);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--gold-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .folder-view-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Document count indicator */
-    .doc-tally {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
-      background: var(--bg-card);
-      border: 1px solid var(--border-faint);
-      padding: 4px 10px;
-      border-radius: 2px;
-    }
-
-    /* ─── FILE TABLE ─────────────────────────────────────────────────────── */
-    .file-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .file-table thead tr {
-      border-bottom: 1px solid var(--border-normal);
-    }
-
-    .file-table thead th {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text-faint);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem 0.5rem 0;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    .file-table thead th:first-child { padding-left: 0; }
-
-    .file-table tbody tr {
-      border-bottom: 1px solid var(--border-faint);
-      transition: all 0.12s;
-      cursor: pointer;
-    }
-
-    .file-table tbody tr:hover:not(.row-locked) {
-      background: rgba(184,154,62,0.03);
-    }
-
-    .file-table tbody tr.row-locked {
-      cursor: not-allowed;
-      opacity: 0.45;
-    }
-
-    .file-table tbody td {
-      padding: 0.85rem 1rem 0.85rem 0;
-      vertical-align: middle;
-    }
-
-    .file-table tbody td:first-child { padding-left: 0; }
-
-    .td-icon { width: 36px; }
-
-    .file-doc-icon {
-      width: 32px; height: 32px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-faint);
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .td-name {}
-
-    .fname-primary {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-primary);
-      margin-bottom: 3px;
-    }
-
-    .fname-secondary {
-      font-family: var(--font-body);
-      font-size: 11px;
-      color: var(--text-secondary);
-    }
-
-    .td-class { width: 120px; text-align: right; }
-
-    .class-tag {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-family: var(--font-mono);
-      font-size: 9px;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 2px;
-    }
-
-    .tag-public     { background: rgba(45,140,80,0.12);  color: var(--green-text); border: 1px solid var(--green-mid);    }
-    .tag-classified { background: rgba(156,44,44,0.12);  color: var(--red-text);   border: 1px solid var(--red-dark);     }
-    .tag-ceo-order  { background: rgba(184,154,62,0.1);  color: var(--gold-bright);border: 1px solid var(--gold-deep);    }
-    .tag-restricted { background: rgba(156,44,44,0.08);  color: #a04040;           border: 1px solid rgba(156,44,44,0.3); }
-
-    .class-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
+      color: var(--navy);
+      background: #fff;
+      border: 1px solid var(--navy);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+      text-decoration: none;
       flex-shrink: 0;
     }
 
-    .tag-public     .class-dot { background: var(--green-bright); }
-    .tag-classified .class-dot { background: var(--red-bright); }
-    .tag-ceo-order  .class-dot { background: var(--gold-mid); }
+    .btn-back:hover { background: var(--navy); color: #fff; text-decoration: none; }
 
-    /* ─── EMPTY STATE ────────────────────────────────────────────────────── */
-    .empty-dir {
+    .folder-view-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .folder-view-count { margin-left: auto; font-size: 0.8rem; color: var(--gray-50); white-space: nowrap; }
+
+    /* ── DOCUMENT TABLE ───────────────────────────────────────────── */
+    .doc-table-wrapper { border: 1px solid var(--gray-20); border-radius: 4px; overflow: hidden; }
+
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+
+    .doc-table thead { background: var(--gray-5); border-bottom: 2px solid var(--gray-20); }
+
+    .doc-table thead th {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-50);
+      white-space: nowrap;
+    }
+
+    .doc-table thead th:last-child { text-align: right; }
+
+    .doc-table tbody tr { border-bottom: 1px solid var(--gray-10); transition: background 0.1s; }
+    .doc-table tbody tr:last-child { border-bottom: none; }
+    .doc-table tbody tr:not(.row-locked):hover { background: var(--navy-faint); cursor: pointer; }
+    .doc-table tbody tr.row-locked { opacity: 0.55; cursor: not-allowed; }
+
+    .doc-table td { padding: 0.9rem 1rem; vertical-align: middle; }
+
+    .td-icon-col { width: 44px; }
+
+    .doc-file-icon {
+      width: 36px; height: 36px;
+      background: var(--gray-5);
+      border: 1px solid var(--gray-20);
+      border-radius: 3px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 5rem 2rem;
-      color: var(--text-faint);
+      font-size: 1rem;
+    }
+
+    .doc-name { font-weight: 600; color: var(--navy); margin-bottom: 2px; font-size: 0.9rem; }
+    .doc-desc  { font-size: 0.8rem; color: var(--gray-50); }
+
+    .td-class-col { text-align: right; white-space: nowrap; }
+
+    .class-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 10px;
+    }
+
+    .class-badge .badge-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+    .badge-public     { background: var(--green-bg);  color: var(--green-text); }
+    .badge-public     .badge-dot { background: var(--green-border); }
+
+    .badge-restricted { background: var(--red-bg);    color: var(--red-text);   }
+    .badge-restricted .badge-dot { background: var(--red-border); }
+
+    .badge-ceo-order  { background: var(--gold-light);color: var(--gold);       }
+    .badge-ceo-order  .badge-dot { background: var(--gold-border); }
+
+    /* ── EMPTY STATE ──────────────────────────────────────────────── */
+    .empty-state {
       text-align: center;
-      border: 1px dashed var(--border-faint);
+      padding: 3.5rem 2rem;
+      border: 1px dashed var(--gray-20);
       border-radius: 4px;
-      background: var(--bg-tertiary);
+      background: var(--gray-5);
     }
 
-    .empty-dir-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.25;
-    }
+    .empty-state-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.35; }
+    .empty-state-title { font-size: 1rem; font-weight: 700; color: var(--gray-70); margin-bottom: 0.3rem; }
+    .empty-state-sub   { font-size: 0.85rem; color: var(--gray-50); }
 
-    .empty-dir-title {
-      font-family: var(--font-cond);
-      font-size: 13px;
-      font-weight: 600;
+    /* ── INFO PANEL ───────────────────────────────────────────────── */
+    .info-panel { border: 1px solid var(--gray-20); border-radius: 4px; background: #fff; margin-top: 2rem; overflow: hidden; }
+
+    .info-panel-header {
+      background: var(--gray-5);
+      border-bottom: 1px solid var(--gray-20);
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
+      letter-spacing: 0.1em;
+      color: var(--gray-50);
     }
 
-    .empty-dir-sub {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-faint);
-      letter-spacing: 0.05em;
-    }
+    .info-panel-body { padding: 1rem; }
 
-    /* ─── BREADCRUMB ─────────────────────────────────────────────────────── */
-    .breadcrumb {
+    .info-panel-row {
       display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-faint);
-      margin-bottom: 1.75rem;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--gray-10);
+      font-size: 0.85rem;
     }
 
-    .bc-item {
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: color 0.1s;
+    .info-panel-row:last-child { border-bottom: none; }
+    .ipr-key { color: var(--gray-50); }
+    .ipr-val { font-weight: 600; color: var(--gray-90); }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.7);
+      padding: 2rem 0 1rem;
+      margin-top: 3rem;
+      font-size: 0.82rem;
     }
 
-    .bc-item:hover { color: var(--gold-mid); }
+    .site-footer-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
 
-    .bc-item.current {
-      color: var(--gold-bright);
-      cursor: default;
-    }
-
-    .bc-item.current:hover { color: var(--gold-bright); }
-
-    .bc-sep { color: var(--text-faint); font-size: 9px; }
-
-    /* ─── ALERT NOTICE ───────────────────────────────────────────────────── */
-    .notice-box {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      background: rgba(184,154,62,0.05);
-      border: 1px solid rgba(184,154,62,0.2);
-      border-radius: 3px;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .notice-box .notice-icon { color: var(--gold-mid); flex-shrink: 0; font-size: 12px; }
-    .notice-box .notice-label { color: var(--gold-bright); font-weight: 600; letter-spacing: 0.1em; }
-
-    /* ─── FOOTER ─────────────────────────────────────────────────────────── */
-    footer {
-      background: var(--bg-panel);
-      border-top: 1px solid var(--border-faint);
-      padding: 0.85rem 2rem;
+    .site-footer-top {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--text-faint);
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 1rem;
     }
 
-    .footer-left { }
-    .footer-center {
-      text-align: center;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
+    .footer-col-title {
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.75rem;
     }
 
-    .footer-right { text-align: right; }
+    .footer-brand-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
 
-    /* ─── RESPONSIVE TWEAKS ──────────────────────────────────────────────── */
+    .footer-brand-desc { color: rgba(255,255,255,0.55); line-height: 1.55; font-size: 0.8rem; }
+
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.35rem; }
+    .footer-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.8rem; transition: color 0.12s; }
+    .footer-links a:hover { color: #fff; text-decoration: underline; }
+
+    .site-footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .site-footer-bottom a { color: rgba(255,255,255,0.5); }
+    .site-footer-bottom a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────────── */
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .header  { grid-template-columns: auto 1fr; }
-      .header-right { display: none; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .nav-tabs-bar { padding-left: 1rem; }
+      .page-wrapper { grid-template-columns: 1fr; gap: 1.5rem; }
+      .sidebar { position: static; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .folder-grid { grid-template-columns: 1fr; }
+      .site-header-meta { display: none; }
+      .site-footer-top { grid-template-columns: 1fr 1fr; }
+      .primary-nav-inner { overflow-x: auto; }
     }
 
-    /* ─── ANIMATION UTILITIES ────────────────────────────────────────────── */
-    .fade-in { animation: fadeIn 0.3s ease forwards; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .site-footer-top { grid-template-columns: 1fr; }
     }
 
-    /* ─── HOVER LINK ─────────────────────────────────────────────────────── */
-    a { text-decoration: none; color: inherit; }
+    @media print {
+      .gov-banner, .primary-nav, .breadcrumb-bar, .sidebar,
+      .btn-back, .site-footer { display: none !important; }
+      .page-wrapper { grid-template-columns: 1fr; padding: 0; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- TOP CLASSIFICATION BANNER -->
-  <div class="classif-top">
-    <span>⚠</span>
-    <span class="divider">///</span>
-    <span>Official NBEP Secure Document Repository</span>
-    <span class="divider">///</span>
-    <span>Unauthorized Access Is Strictly Prohibited &amp; Prosecutable Under Federal Law</span>
-    <span class="divider">///</span>
-    <span>⚠</span>
-  </div>
-
-  <!-- TICKER -->
-  <div class="ticker-bar">
-    <div class="ticker-label">LIVE FEED</div>
-    <div class="ticker-track">
-      <div class="ticker-content" id="ticker">
-        <span class="tick-item">▸ NBEP Archive Portal — Session Active</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ All access events are logged and audited</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ Certification documents last updated: 2025-02-27</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ CEO Orders directory: 2 active directives on record</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ System integrity check: PASSED — All nodes nominal</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ Restricted access: NDA document requires elevated clearance</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ NBEP Archive Portal — Session Active</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ All access events are logged and audited</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ Certification documents last updated: 2025-02-27</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ CEO Orders directory: 2 active directives on record</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ System integrity check: PASSED — All nodes nominal</span>
-        <span class="tick-sep">|</span>
-        <span class="tick-item">▸ Restricted access: NDA document requires elevated clearance</span>
-      </div>
+  <!-- GOV BANNER -->
+  <div class="gov-banner" role="banner" aria-label="Official government website">
+    <div class="gov-banner-inner">
+      <span class="gov-flag" aria-hidden="true"></span>
+      <span class="gov-banner-text">An <strong>official website</strong> of the National Bureau of Exploitation Protection</span>
+      <span class="gov-banner-lock" aria-label="Secure site indicator">🔒 Secure .nbep.gov</span>
     </div>
   </div>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-brand">
-      <div class="brand-seal">
-        <div class="brand-seal-text">N<br>B<br>E<br>P</div>
-      </div>
-      <div class="brand-info">
-        <div class="brand-name">N.B.E.P.</div>
-        <div class="brand-full">National Bureau of Exploitation Protection</div>
-      </div>
-    </div>
-
-    <div class="header-center">
-      <div class="header-portal-id">
-        <div>Portal: <strong>ARCHIVE-v2.4.1</strong></div>
-        <div>Node: <strong>AR-NODE-07</strong></div>
-      </div>
-      <div class="header-sep"></div>
-      <div class="header-status-cluster">
-        <div class="status-badge online">
-          <span class="status-dot online"></span>
-          SYSTEMS ONLINE
+  <!-- SITE HEADER -->
+  <header class="site-header" role="banner">
+    <div class="site-header-inner">
+      <a class="site-header-brand" href="#" onclick="showRoot(); return false;" aria-label="NBEP Home">
+        <div class="brand-emblem" aria-hidden="true">🏛</div>
+        <div>
+          <div class="brand-dept">National Bureau of Exploitation Protection</div>
+          <div class="brand-name">Document Archive</div>
+          <div class="brand-sub">Public Records &amp; Official Directives Repository</div>
         </div>
-        <div class="status-badge warn">
-          <span class="status-dot warn"></span>
-          1 RESTRICTED RECORD
-        </div>
-      </div>
-    </div>
-
-    <div class="header-right">
-      <div>
-        <div class="header-clock" id="clock-display">--:--:-- UTC</div>
-        <div id="date-display" style="font-size:9px;color:var(--text-faint);">Loading...</div>
-        <div class="header-session">SESSION: GUEST-READONLY</div>
+      </a>
+      <div class="site-header-meta" aria-label="Session information">
+        <div class="clock" id="clock-utc">Loading...</div>
+        <div>February 28, 2026</div>
+        <div>Access Level: Public / Read-Only</div>
       </div>
     </div>
   </header>
 
-  <!-- NAV TABS -->
-  <div class="nav-tabs-bar">
-    <div class="nav-tab active" id="tab-archive" onclick="switchTab('archive')">
-      📁 Archive
-      <span class="tab-count">4</span>
+  <!-- PRIMARY NAV -->
+  <nav class="primary-nav" aria-label="Primary navigation">
+    <div class="primary-nav-inner">
+      <span class="primary-nav-item active" id="pnav-home"    onclick="showRoot();                        setPNav('home')"   role="button" tabindex="0">Home</span>
+      <span class="primary-nav-item"        id="pnav-wanted"  onclick="openFolder('wanted'); setPNav('wanted')" role="button" tabindex="0">Most Wanted <span class="nav-badge">0</span></span>
+      <span class="primary-nav-item"        id="pnav-certs"   onclick="openFolder('certs');  setPNav('certs')"  role="button" tabindex="0">Certifications <span class="nav-badge">4</span></span>
+      <span class="primary-nav-item"        id="pnav-misc"    onclick="openFolder('misc');   setPNav('misc')"   role="button" tabindex="0">Miscellaneous <span class="nav-badge">0</span></span>
+      <span class="primary-nav-item"        id="pnav-ceo"     onclick="openFolder('ceo');    setPNav('ceo')"    role="button" tabindex="0">CEO Orders <span class="nav-badge">2</span></span>
     </div>
-    <div class="nav-tab" id="tab-wanted" onclick="switchTab('wanted'); openFolder('wanted')">
-      🔍 Most Wanted
-      <span class="tab-count">0</span>
-    </div>
-    <div class="nav-tab" id="tab-certs" onclick="switchTab('certs'); openFolder('certs')">
-      📋 Certifications
-      <span class="tab-count">4</span>
-    </div>
-    <div class="nav-tab" id="tab-ceo" onclick="switchTab('ceo'); openFolder('ceo')">
-      🏛 CEO Orders
-      <span class="tab-count">2</span>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <span class="bc" onclick="showRoot(); setPNav('home')" role="link" tabindex="0">NBEP</span>
+      <span class="bc-sep" aria-hidden="true">›</span>
+      <span class="bc" onclick="showRoot(); setPNav('home')" role="link" tabindex="0">Document Archive</span>
+      <span id="bc-extra" aria-live="polite"></span>
     </div>
   </div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="layout">
+  <!-- PAGE WRAPPER -->
+  <div class="page-wrapper">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Navigation</div>
-        <div class="sidebar-nav-item active" id="snav-root" onclick="showRoot(); resetTabs()">
-          <span class="nav-icon">🗂</span>
-          All Folders
-          <span class="nav-count">4</span>
-        </div>
-        <div class="sidebar-nav-item" id="snav-wanted" onclick="openFolder('wanted'); setTabActive('wanted')">
-          <span class="nav-icon">🔍</span>
-          Most Wanted
-          <span class="nav-count">0</span>
-        </div>
-        <div class="sidebar-nav-item" id="snav-certs" onclick="openFolder('certs'); setTabActive('certs')">
-          <span class="nav-icon">📋</span>
-          Certifications
-          <span class="nav-count">4</span>
-        </div>
-        <div class="sidebar-nav-item" id="snav-misc" onclick="openFolder('misc')">
-          <span class="nav-icon">📂</span>
-          Miscellaneous
-          <span class="nav-count">0</span>
-        </div>
-        <div class="sidebar-nav-item" id="snav-ceo" onclick="openFolder('ceo'); setTabActive('ceo')">
-          <span class="nav-icon">🏛</span>
-          CEO Orders
-          <span class="nav-count">2</span>
-        </div>
-      </div>
-
-      <div class="sidebar-divider"></div>
+    <aside class="sidebar" aria-label="Sidebar navigation">
 
       <div class="sidebar-section">
-        <div class="sidebar-section-label">Repository Info</div>
-        <div class="sidebar-info-panel">
-          <div class="sip-title">System Status</div>
-          <div class="sip-row">
-            <span class="sip-key">Status</span>
-            <span class="sip-val green">● ONLINE</span>
-          </div>
-          <div class="sip-row">
-            <span class="sip-key">Total Docs</span>
-            <span class="sip-val gold">6</span>
-          </div>
-          <div class="sip-row">
-            <span class="sip-key">Public</span>
-            <span class="sip-val">5</span>
-          </div>
-          <div class="sip-row">
-            <span class="sip-key">Restricted</span>
-            <span class="sip-val red">1</span>
-          </div>
-          <div class="sip-row">
-            <span class="sip-key">Folders</span>
-            <span class="sip-val">4</span>
-          </div>
-          <div class="sip-row">
-            <span class="sip-key">Last Indexed</span>
-            <span class="sip-val">2025-02-27</span>
-          </div>
+        <div class="sidebar-heading">Directories</div>
+        <span class="sidebar-link active" id="snav-root"   onclick="showRoot(); setSNav('root')"          role="link" tabindex="0">📁 All Directories   <span class="sl-count">4</span></span>
+        <span class="sidebar-link"        id="snav-wanted" onclick="openFolder('wanted'); setSNav('wanted')" role="link" tabindex="0">🔍 Most Wanted        <span class="sl-count">0</span></span>
+        <span class="sidebar-link"        id="snav-certs"  onclick="openFolder('certs');  setSNav('certs')"  role="link" tabindex="0">📋 Certifications     <span class="sl-count">5</span></span>
+        <span class="sidebar-link"        id="snav-misc"   onclick="openFolder('misc');   setSNav('misc')"   role="link" tabindex="0">📂 Miscellaneous      <span class="sl-count">0</span></span>
+        <span class="sidebar-link"        id="snav-ceo"    onclick="openFolder('ceo');    setSNav('ceo')"    role="link" tabindex="0">🏛 CEO Orders         <span class="sl-count">2</span></span>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Repository Status</div>
+        <div class="sidebar-info-box">
+          <div class="sib-title">System Information</div>
+          <div class="sib-row"><span class="sib-key">Portal Status</span>   <span class="sib-val green">● Online</span></div>
+          <div class="sib-row"><span class="sib-key">Total Records</span>   <span class="sib-val">6</span></div>
+          <div class="sib-row"><span class="sib-key">Directories</span>     <span class="sib-val">4</span></div>
+          <div class="sib-row"><span class="sib-key">Public Docs</span>     <span class="sib-val green">5</span></div>
+          <div class="sib-row"><span class="sib-key">Restricted</span>      <span class="sib-val red">1</span></div>
+          <div class="sib-row"><span class="sib-key">Last Updated</span>    <span class="sib-val">Feb 27, 2026</span></div>
+          <div class="sib-row"><span class="sib-key">Access Level</span>   <span class="sib-val gold">Public</span></div>
         </div>
       </div>
 
-      <div class="sidebar-push"></div>
-
-      <div class="sidebar-footer">
-        <div class="sf-version">ARCHIVE PORTAL v2.4.1</div>
-        <div>NBEP Secure Infrastructure</div>
-        <div>© 2025 All Rights Reserved</div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Contact</div>
+        <div class="sidebar-info-box" style="font-size:0.8rem;color:var(--gray-70);line-height:1.6;">
+          <div style="font-weight:700;margin-bottom:0.4rem;color:var(--gray-90);">NBEP Records Office</div>
+          <div>For record requests or inquiries contact the NBEP Records Management Division.</div>
+          <div style="margin-top:0.5rem;color:var(--navy);font-weight:600;">records@nbep.gov</div>
+        </div>
       </div>
+
     </aside>
 
-    <!-- MAIN -->
-    <main class="main-content">
+    <!-- MAIN CONTENT -->
+    <main class="main" id="main-content" role="main">
 
-      <!-- BREADCRUMB -->
-      <div class="breadcrumb" id="breadcrumb">
-        <span class="bc-item" onclick="showRoot(); resetTabs()">NBEP</span>
-        <span class="bc-sep">›</span>
-        <span class="bc-item current" id="bc-current">Archive</span>
-      </div>
-
-      <!-- ─── VIEW: ROOT ─────────────────────────────────────── -->
+      <!-- ═══ VIEW: ROOT ═══════════════════════════════════════════ -->
       <div class="view active" id="view-root">
 
-        <div class="page-header">
-          <div class="page-header-left">
-            <div class="page-eyebrow">NBEP — Secure Repository</div>
-            <div class="page-title">Document Archive</div>
-            <div class="page-desc">Select a directory below to view its contents. All access is monitored and logged.</div>
-          </div>
-          <div class="page-header-right">
-            <div class="meta-chip"><span class="mc-label">LAST INDEX:</span> 2025-02-27 00:00 UTC</div>
-            <div class="meta-chip"><span class="mc-label">ACCESS LEVEL:</span> GUEST / READ-ONLY</div>
-          </div>
-        </div>
-
-        <!-- Stats row -->
-        <div class="stats-row">
-          <div class="stat-card gold">
-            <div class="stat-label">Total Directories</div>
-            <div class="stat-value">4</div>
-            <div class="stat-sub">Active folders on record</div>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-label">Public Documents</div>
-            <div class="stat-value">5</div>
-            <div class="stat-sub">Accessible to verified users</div>
-          </div>
-          <div class="stat-card red">
-            <div class="stat-label">Restricted Records</div>
-            <div class="stat-value">1</div>
-            <div class="stat-sub">Elevated clearance required</div>
-          </div>
-          <div class="stat-card blue">
-            <div class="stat-label">CEO Directives</div>
-            <div class="stat-value">2</div>
-            <div class="stat-sub">Active executive orders</div>
+        <div class="page-title-block">
+          <div class="page-eyebrow">Public Records Portal</div>
+          <h1 class="page-h1">Document Archive</h1>
+          <p class="page-lead">Official repository of NBEP records, certifications, and executive directives. Select a directory below to browse documents. All public records are available to authorized personnel.</p>
+          <div class="page-meta-row">
+            <div class="page-meta-item">📅 Last indexed: <strong>February 27, 2026</strong></div>
+            <div class="page-meta-item">🔖 Portal: <strong>Archive v2.4.1</strong></div>
+            <div class="page-meta-item">🖥 Node: <strong>AR-07</strong></div>
           </div>
         </div>
 
-        <div class="notice-box">
-          <span class="notice-icon">ℹ</span>
-          <span>
-            <span class="notice-label">NOTICE:</span>
-            This repository is an official NBEP records system. All browsing sessions are logged with timestamp and session identifiers. Unauthorized access or distribution of classified materials is a prosecutable offense under NBEP Internal Security Code §4.2.
-          </span>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-icon">ℹ</span>
+          <div><strong>Notice:</strong> This is an official NBEP document repository. All sessions are logged and monitored. Unauthorized access to restricted materials is a prosecutable offense under NBEP Internal Security Code §4.2. Documents marked <em>Restricted</em> require elevated credentials.</div>
         </div>
 
-        <!-- Folder grid -->
+        <div class="stats-grid" aria-label="Repository statistics">
+          <div class="stat-tile navy">
+            <div class="stat-tile-label">Total Directories</div>
+            <div class="stat-tile-value">4</div>
+            <div class="stat-tile-sub">Active folders</div>
+          </div>
+          <div class="stat-tile green">
+            <div class="stat-tile-label">Public Records</div>
+            <div class="stat-tile-value">5</div>
+            <div class="stat-tile-sub">Accessible to all</div>
+          </div>
+          <div class="stat-tile red">
+            <div class="stat-tile-label">Restricted Records</div>
+            <div class="stat-tile-value">1</div>
+            <div class="stat-tile-sub">Clearance required</div>
+          </div>
+          <div class="stat-tile gold">
+            <div class="stat-tile-label">CEO Directives</div>
+            <div class="stat-tile-value">2</div>
+            <div class="stat-tile-sub">Active executive orders</div>
+          </div>
+        </div>
+
+        <div class="section-h2">Available Directories</div>
         <div class="folder-grid">
 
-          <div class="folder-card" onclick="openFolder('wanted')">
-            <span class="folder-card-badge badge-empty">EMPTY</span>
-            <span class="folder-card-icon">📁</span>
+          <div class="folder-card" onclick="openFolder('wanted'); setSNav('wanted')" role="button" tabindex="0">
+            <div class="folder-card-header">
+              <div class="folder-icon-wrap">🔍</div>
+              <span class="folder-status-chip chip-empty">Empty</span>
+            </div>
             <div class="folder-card-name">Most Wanted</div>
-            <div class="folder-card-meta">
-              <div><span class="doc-count">0</span> documents on record</div>
-              <div>Pending population</div>
+            <div class="folder-card-desc">Directory reserved for NBEP wanted persons and related records. Currently unpopulated.</div>
+            <div class="folder-card-footer">
+              <span><span class="doc-count">0</span> documents</span>
+              <span class="folder-card-arrow">View directory →</span>
             </div>
-            <span class="folder-card-arrow">→</span>
           </div>
 
-          <div class="folder-card" onclick="openFolder('certs')">
-            <span class="folder-card-badge badge-active">ACTIVE</span>
-            <span class="folder-card-icon">📁</span>
+          <div class="folder-card" onclick="openFolder('certs'); setSNav('certs')" role="button" tabindex="0">
+            <div class="folder-card-header">
+              <div class="folder-icon-wrap">📋</div>
+              <span class="folder-status-chip chip-active">Active</span>
+            </div>
             <div class="folder-card-name">Employee Certification Documents</div>
-            <div class="folder-card-meta">
-              <div><span class="doc-count">5</span> documents — 4 public, 1 restricted</div>
-              <div>Conduct, compliance &amp; onboarding</div>
+            <div class="folder-card-desc">Employee handbook, terms of service, verification forms, privacy policy, and non-disclosure agreements.</div>
+            <div class="folder-card-footer">
+              <span><span class="doc-count">5</span> documents — 4 public, 1 restricted</span>
+              <span class="folder-card-arrow">View directory →</span>
             </div>
-            <span class="folder-card-arrow">→</span>
           </div>
 
-          <div class="folder-card" onclick="openFolder('misc')">
-            <span class="folder-card-badge badge-empty">EMPTY</span>
-            <span class="folder-card-icon">📁</span>
+          <div class="folder-card" onclick="openFolder('misc'); setSNav('misc')" role="button" tabindex="0">
+            <div class="folder-card-header">
+              <div class="folder-icon-wrap">📂</div>
+              <span class="folder-status-chip chip-empty">Empty</span>
+            </div>
             <div class="folder-card-name">Miscellaneous</div>
-            <div class="folder-card-meta">
-              <div><span class="doc-count">0</span> documents on record</div>
-              <div>Pending population</div>
+            <div class="folder-card-desc">General-purpose directory for documents not categorized elsewhere. Currently unpopulated.</div>
+            <div class="folder-card-footer">
+              <span><span class="doc-count">0</span> documents</span>
+              <span class="folder-card-arrow">View directory →</span>
             </div>
-            <span class="folder-card-arrow">→</span>
           </div>
 
-          <div class="folder-card" onclick="openFolder('ceo')">
-            <span class="folder-card-badge badge-ceo">CEO</span>
-            <span class="folder-card-icon">📁</span>
-            <div class="folder-card-name">Chief Executive Officer Orders</div>
-            <div class="folder-card-meta">
-              <div><span class="doc-count">2</span> executive directives</div>
-              <div>Official CEO-issued orders</div>
+          <div class="folder-card" onclick="openFolder('ceo'); setSNav('ceo')" role="button" tabindex="0">
+            <div class="folder-card-header">
+              <div class="folder-icon-wrap">🏛</div>
+              <span class="folder-status-chip chip-ceo">CEO</span>
             </div>
-            <span class="folder-card-arrow">→</span>
+            <div class="folder-card-name">Chief Executive Officer Orders</div>
+            <div class="folder-card-desc">Official directives and orders issued by the NBEP Chief Executive Officer. Binding organizational authority.</div>
+            <div class="folder-card-footer">
+              <span><span class="doc-count">2</span> executive directives</span>
+              <span class="folder-card-arrow">View directory →</span>
+            </div>
           </div>
 
         </div>
-      </div>
 
-      <!-- ─── VIEW: MOST WANTED ──────────────────────────────── -->
+        <div class="section-h2">About This Repository</div>
+        <div class="info-panel">
+          <div class="info-panel-header">Repository Details</div>
+          <div class="info-panel-body">
+            <div class="info-panel-row"><span class="ipr-key">System Name</span>          <span class="ipr-val">NBEP Document Archive Portal</span></div>
+            <div class="info-panel-row"><span class="ipr-key">Version</span>               <span class="ipr-val">v2.4.1</span></div>
+            <div class="info-panel-row"><span class="ipr-key">Portal Node</span>           <span class="ipr-val">AR-NODE-07</span></div>
+            <div class="info-panel-row"><span class="ipr-key">Operated By</span>           <span class="ipr-val">NBEP Records Management Division</span></div>
+            <div class="info-panel-row"><span class="ipr-key">Governing Regulation</span>  <span class="ipr-val">NBEP Internal Security Code §4.2</span></div>
+            <div class="info-panel-row"><span class="ipr-key">As of Date</span>            <span class="ipr-val">February 28, 2026</span></div>
+          </div>
+        </div>
+
+      </div><!-- /view-root -->
+
+
+      <!-- ═══ VIEW: MOST WANTED ═══════════════════════════════════ -->
       <div class="view" id="view-wanted">
         <div class="folder-view-header">
-          <button class="btn-back" onclick="showRoot(); resetTabs()">← Back</button>
-          <div class="folder-view-title-block">
-            <div class="folder-view-eyebrow">NBEP Archive — Directory</div>
-            <div class="folder-view-title">📁 Most Wanted</div>
-          </div>
-          <div class="folder-view-actions">
-            <div class="doc-tally">0 Records</div>
-          </div>
+          <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
+          <h2 class="folder-view-title">Most Wanted</h2>
+          <span class="folder-view-count">0 records</span>
         </div>
-        <div class="empty-dir">
-          <div class="empty-dir-icon">🗂️</div>
-          <div class="empty-dir-title">No Records Found</div>
-          <div class="empty-dir-sub">This directory contains no documents at this time.</div>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-icon">ℹ</span>
+          <div>This directory is currently empty. Records are added by authorized NBEP personnel only.</div>
+        </div>
+        <div class="empty-state" role="status">
+          <div class="empty-state-icon">🗂</div>
+          <div class="empty-state-title">No records found</div>
+          <div class="empty-state-sub">This directory contains no documents at this time.</div>
         </div>
       </div>
 
-      <!-- ─── VIEW: CERTIFICATIONS ──────────────────────────── -->
+
+      <!-- ═══ VIEW: CERTIFICATIONS ════════════════════════════════ -->
       <div class="view" id="view-certs">
         <div class="folder-view-header">
-          <button class="btn-back" onclick="showRoot(); resetTabs()">← Back</button>
-          <div class="folder-view-title-block">
-            <div class="folder-view-eyebrow">NBEP Archive — Directory</div>
-            <div class="folder-view-title">📁 Employee Certification Documents</div>
-          </div>
-          <div class="folder-view-actions">
-            <div class="doc-tally">5 Records — 4 Public / 1 Restricted</div>
-          </div>
+          <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
+          <h2 class="folder-view-title">Employee Certification Documents</h2>
+          <span class="folder-view-count">5 records — 4 public, 1 restricted</span>
         </div>
 
-        <div class="notice-box">
-          <span class="notice-icon">ℹ</span>
-          <span>
-            <span class="notice-label">ACCESS NOTE:</span>
-            One document in this directory (NDA) is restricted. Elevated clearance credentials are required to access classified materials.
-          </span>
+        <div class="alert alert-warning" role="alert">
+          <span class="alert-icon">⚠</span>
+          <div><strong>Access Notice:</strong> One document in this directory (NDA) is classified as restricted and is not publicly accessible. Elevated credentials are required. Attempting to access restricted records without proper authorization is a violation of NBEP policy.</div>
         </div>
 
-        <table class="file-table">
-          <thead>
-            <tr>
-              <th class="td-icon"></th>
-              <th class="td-name">Document</th>
-              <th class="td-class">Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/handbook.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">handbook.pdf</div>
-                <div class="fname-secondary">NBEP Employee Handbook — Standard Conduct &amp; Procedures</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-public"><span class="class-dot"></span>PUBLIC</span></td>
-            </tr>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/tos.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">tos.pdf</div>
-                <div class="fname-secondary">Terms of Service — Employee Agreement Document</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-public"><span class="class-dot"></span>PUBLIC</span></td>
-            </tr>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/verif.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">verif.pdf</div>
-                <div class="fname-secondary">Verification &amp; Identity Certification Form</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-public"><span class="class-dot"></span>PUBLIC</span></td>
-            </tr>
-            <tr class="row-locked" title="Restricted — Elevated clearance required">
-              <td class="td-icon"><div class="file-doc-icon">🔒</div></td>
-              <td class="td-name">
-                <div class="fname-primary">nda.pdf</div>
-                <div class="fname-secondary">Non-Disclosure Agreement — CLASSIFIED. Not accessible to the public.</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-classified"><span class="class-dot"></span>RESTRICTED</span></td>
-            </tr>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/privpolic.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">privpolic.pdf</div>
-                <div class="fname-secondary">Privacy Policy — Data Handling &amp; Confidentiality Standards</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-public"><span class="class-dot"></span>PUBLIC</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="doc-table-wrapper" role="region" aria-label="Employee certification documents">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th class="td-icon-col" scope="col" aria-label="File type"></th>
+                <th scope="col">Document Title</th>
+                <th scope="col" style="text-align:right;">Classification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/handbook.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">handbook.pdf</div><div class="doc-desc">NBEP Employee Handbook — Standard Conduct &amp; Procedures</div></td>
+                <td class="td-class-col"><span class="class-badge badge-public"><span class="badge-dot"></span>Public</span></td>
+              </tr>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/tos.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">tos.pdf</div><div class="doc-desc">Terms of Service — Employee Agreement &amp; Conditions of Employment</div></td>
+                <td class="td-class-col"><span class="class-badge badge-public"><span class="badge-dot"></span>Public</span></td>
+              </tr>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/verif.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">verif.pdf</div><div class="doc-desc">Verification &amp; Identity Certification Form — Required for all new personnel</div></td>
+                <td class="td-class-col"><span class="class-badge badge-public"><span class="badge-dot"></span>Public</span></td>
+              </tr>
+              <tr class="row-locked" title="Restricted — Elevated clearance required">
+                <td class="td-icon-col"><div class="doc-file-icon">🔒</div></td>
+                <td><div class="doc-name">nda.pdf</div><div class="doc-desc">Non-Disclosure Agreement — Classified. Not accessible to the public. Elevated clearance required.</div></td>
+                <td class="td-class-col"><span class="class-badge badge-restricted"><span class="badge-dot"></span>Restricted</span></td>
+              </tr>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/privpolic.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">privpolic.pdf</div><div class="doc-desc">Privacy Policy — Data Handling, Retention &amp; Confidentiality Standards</div></td>
+                <td class="td-class-col"><span class="class-badge badge-public"><span class="badge-dot"></span>Public</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <!-- ─── VIEW: MISCELLANEOUS ───────────────────────────── -->
+
+      <!-- ═══ VIEW: MISCELLANEOUS ══════════════════════════════════ -->
       <div class="view" id="view-misc">
         <div class="folder-view-header">
-          <button class="btn-back" onclick="showRoot(); resetTabs()">← Back</button>
-          <div class="folder-view-title-block">
-            <div class="folder-view-eyebrow">NBEP Archive — Directory</div>
-            <div class="folder-view-title">📁 Miscellaneous</div>
-          </div>
-          <div class="folder-view-actions">
-            <div class="doc-tally">0 Records</div>
-          </div>
+          <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
+          <h2 class="folder-view-title">Miscellaneous</h2>
+          <span class="folder-view-count">0 records</span>
         </div>
-        <div class="empty-dir">
-          <div class="empty-dir-icon">🗂️</div>
-          <div class="empty-dir-title">No Records Found</div>
-          <div class="empty-dir-sub">This directory contains no documents at this time.</div>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-icon">ℹ</span>
+          <div>This directory is currently empty. Records are added by authorized NBEP personnel only.</div>
+        </div>
+        <div class="empty-state" role="status">
+          <div class="empty-state-icon">🗂</div>
+          <div class="empty-state-title">No records found</div>
+          <div class="empty-state-sub">This directory contains no documents at this time.</div>
         </div>
       </div>
 
-      <!-- ─── VIEW: CEO ORDERS ───────────────────────────────── -->
+
+      <!-- ═══ VIEW: CEO ORDERS ═════════════════════════════════════ -->
       <div class="view" id="view-ceo">
         <div class="folder-view-header">
-          <button class="btn-back" onclick="showRoot(); resetTabs()">← Back</button>
-          <div class="folder-view-title-block">
-            <div class="folder-view-eyebrow">NBEP Archive — Executive Directory</div>
-            <div class="folder-view-title">📁 Chief Executive Officer Orders</div>
-          </div>
-          <div class="folder-view-actions">
-            <div class="doc-tally">2 Executive Directives</div>
-          </div>
+          <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
+          <h2 class="folder-view-title">Chief Executive Officer Orders</h2>
+          <span class="folder-view-count">2 executive directives</span>
         </div>
 
-        <div class="notice-box">
-          <span class="notice-icon">⚑</span>
-          <span>
-            <span class="notice-label">EXECUTIVE NOTICE:</span>
-            Documents in this directory are official CEO-issued directives and carry binding authority within the NBEP organizational structure. Distribution beyond authorized personnel is prohibited.
-          </span>
+        <div class="alert alert-warning" role="alert">
+          <span class="alert-icon">⚑</span>
+          <div><strong>Executive Notice:</strong> Documents in this directory are official CEO-issued directives carrying binding authority within the NBEP organizational structure. Distribution outside authorized personnel is strictly prohibited.</div>
         </div>
 
-        <table class="file-table">
-          <thead>
-            <tr>
-              <th class="td-icon"></th>
-              <th class="td-name">Document</th>
-              <th class="td-class">Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/open.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">open.pdf</div>
-                <div class="fname-secondary">Opening Order — CEO Directive Document</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-ceo-order"><span class="class-dot"></span>CEO ORDER</span></td>
-            </tr>
-            <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/promote.pdf','_blank')">
-              <td class="td-icon"><div class="file-doc-icon">📄</div></td>
-              <td class="td-name">
-                <div class="fname-primary">promote.pdf</div>
-                <div class="fname-secondary">Promotion Order — Official CEO Advancement Directive</div>
-              </td>
-              <td class="td-class"><span class="class-tag tag-ceo-order"><span class="class-dot"></span>CEO ORDER</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="doc-table-wrapper" role="region" aria-label="CEO order documents">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th class="td-icon-col" scope="col" aria-label="File type"></th>
+                <th scope="col">Document Title</th>
+                <th scope="col" style="text-align:right;">Classification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/open.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">open.pdf</div><div class="doc-desc">Opening Order — Official CEO Directive establishing organizational parameters</div></td>
+                <td class="td-class-col"><span class="class-badge badge-ceo-order"><span class="badge-dot"></span>CEO Order</span></td>
+              </tr>
+              <tr onclick="window.open('https://raw.githubusercontent.com/sayroahm/nbep/main/promote.pdf','_blank')">
+                <td class="td-icon-col"><div class="doc-file-icon">📄</div></td>
+                <td><div class="doc-name">promote.pdf</div><div class="doc-desc">Promotion Order — Official CEO Advancement Directive for personnel advancement</div></td>
+                <td class="td-class-col"><span class="class-badge badge-ceo-order"><span class="badge-dot"></span>CEO Order</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </main>
-  </div>
-
-  <!-- BOTTOM CLASSIFICATION BANNER -->
-  <div class="classif-bottom">
-    <span>⚠</span>
-    <span class="divider">///</span>
-    <span>NBEP Internal Archive — Confidential System</span>
-    <span class="divider">///</span>
-    <span>Unauthorized access or duplication is a prosecutable federal offense</span>
-    <span class="divider">///</span>
-    <span>⚠</span>
-  </div>
+  </div><!-- /page-wrapper -->
 
   <!-- FOOTER -->
-  <footer>
-    <div class="footer-left">© 2025 N.B.E.P. — National Bureau of Exploitation Protection. All rights reserved.</div>
-    <div class="footer-center">ARCHIVE PORTAL v2.4.1 &nbsp;|&nbsp; AR-NODE-07 &nbsp;|&nbsp; SESSION: GUEST-READONLY</div>
-    <div class="footer-right">CONFIDENTIAL SYSTEM &nbsp;|&nbsp; ACCESS IS MONITORED &amp; LOGGED</div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer-inner">
+      <div class="site-footer-top">
+        <div>
+          <div class="footer-brand-name">N.B.E.P. — National Bureau of Exploitation Protection</div>
+          <div class="footer-brand-desc">The NBEP Document Archive is the official repository for public records, employee certifications, and executive directives. All records are maintained in accordance with NBEP Records Management Policy.</div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="showRoot(); return false;">Home</a></li>
+            <li><a href="#" onclick="openFolder('certs'); setSNav('certs'); return false;">Certifications</a></li>
+            <li><a href="#" onclick="openFolder('ceo'); setSNav('ceo'); return false;">CEO Orders</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <ul class="footer-links">
+            <li><a href="#">Accessibility</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Freedom of Information</a></li>
+            <li><a href="#">No FEAR Act</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-links">
+            <li><a href="mailto:records@nbep.gov">records@nbep.gov</a></li>
+            <li><a href="#">Submit a Request</a></li>
+            <li><a href="#">Report an Issue</a></li>
+            <li><a href="#">Media Inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer-bottom">
+        <span>© 2026 National Bureau of Exploitation Protection. All rights reserved.</span>
+        <span>Archive Portal v2.4.1 &nbsp;|&nbsp; Node AR-07 &nbsp;|&nbsp; Last indexed: February 27, 2026</span>
+        <span><a href="#">USA.gov</a> &nbsp;|&nbsp; <a href="#">Contact NBEP</a></span>
+      </div>
+    </div>
   </footer>
 
-  <!-- ─── SCRIPTS ──────────────────────────────────────────────────────── -->
   <script>
     'use strict';
 
-    /* ── CLOCK ─────────────────────────────────────────────────────────── */
+    /* CLOCK */
+    function pad2(n) { return String(n).padStart(2,'0'); }
     function updateClock() {
-      const now  = new Date();
-      const hh   = String(now.getUTCHours()).padStart(2,'0');
-      const mm   = String(now.getUTCMinutes()).padStart(2,'0');
-      const ss   = String(now.getUTCSeconds()).padStart(2,'0');
-      const yyyy = now.getUTCFullYear();
-      const mo   = String(now.getUTCMonth()+1).padStart(2,'0');
-      const dd   = String(now.getUTCDate()).padStart(2,'0');
-
-      const clockEl = document.getElementById('clock-display');
-      const dateEl  = document.getElementById('date-display');
-      if (clockEl) clockEl.textContent = `${hh}:${mm}:${ss} UTC`;
-      if (dateEl)  dateEl.textContent  = `${yyyy}-${mo}-${dd}`;
+      const n = new Date();
+      const el = document.getElementById('clock-utc');
+      if (el) el.textContent = pad2(n.getUTCHours())+':'+pad2(n.getUTCMinutes())+':'+pad2(n.getUTCSeconds())+' UTC';
     }
     updateClock();
     setInterval(updateClock, 1000);
 
-    /* ── VIEW MANAGEMENT ───────────────────────────────────────────────── */
-    const ALL_VIEWS   = ['root', 'wanted', 'certs', 'misc', 'ceo'];
-    const ALL_SNAVS   = ['root', 'wanted', 'certs', 'misc', 'ceo'];
-    const FOLDER_LABELS = {
-      root:   'Archive',
-      wanted: 'Most Wanted',
-      certs:  'Employee Certification Documents',
-      misc:   'Miscellaneous',
-      ceo:    'Chief Executive Officer Orders'
-    };
+    /* VIEW MANAGEMENT */
+    const VIEWS = ['root','wanted','certs','misc','ceo'];
+    const FOLDER_NAMES = { wanted:'Most Wanted', certs:'Employee Certification Documents', misc:'Miscellaneous', ceo:'Chief Executive Officer Orders' };
 
     function showView(name) {
-      ALL_VIEWS.forEach(v => {
-        const el = document.getElementById('view-' + v);
-        if (el) {
-          el.classList.toggle('active', v === name);
-        }
+      VIEWS.forEach(v => {
+        const el = document.getElementById('view-'+v);
+        if (el) el.classList.toggle('active', v === name);
       });
+      const bcExtra = document.getElementById('bc-extra');
+      if (bcExtra) {
+        bcExtra.innerHTML = name === 'root' ? '' :
+          ' <span class="bc-sep" aria-hidden="true">›</span> <span class="bc-current">'+( FOLDER_NAMES[name]||name )+'</span>';
+      }
     }
 
-    function setSidebarActive(name) {
-      ALL_SNAVS.forEach(n => {
-        const el = document.getElementById('snav-' + n);
-        if (el) el.classList.toggle('active', n === name);
-      });
-    }
+    function showRoot() { showView('root'); setSNav('root'); setPNav('home'); }
+    function openFolder(name) { showView(name); setSNav(name); }
 
-    function updateBreadcrumb(folder) {
-      const bc = document.getElementById('bc-current');
-      if (bc) bc.textContent = FOLDER_LABELS[folder] || folder;
-    }
+    /* NAV */
+    const PNAVS = ['home','wanted','certs','misc','ceo'];
+    function setPNav(a) { PNAVS.forEach(n => { const e = document.getElementById('pnav-'+n); if(e) e.classList.toggle('active', n===a); }); }
 
-    function showRoot() {
-      showView('root');
-      setSidebarActive('root');
-      updateBreadcrumb('root');
-      resetTabs();
-    }
+    const SNAVS = ['root','wanted','certs','misc','ceo'];
+    function setSNav(a) { SNAVS.forEach(n => { const e = document.getElementById('snav-'+n); if(e) e.classList.toggle('active', n===a); }); }
 
-    function openFolder(name) {
-      showView(name);
-      setSidebarActive(name);
-      updateBreadcrumb(name);
-    }
-
-    /* ── TAB MANAGEMENT ────────────────────────────────────────────────── */
-    const TAB_IDS = ['archive', 'wanted', 'certs', 'ceo'];
-
-    function switchTab(name) {
-      TAB_IDS.forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (el) el.classList.toggle('active', t === name);
-      });
-    }
-
-    function setTabActive(name) {
-      switchTab(name);
-    }
-
-    function resetTabs() {
-      TAB_IDS.forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (el) el.classList.toggle('active', t === 'archive');
-      });
-    }
-
-    /* ── INIT ──────────────────────────────────────────────────────────── */
-    document.addEventListener('DOMContentLoaded', () => {
-      showRoot();
+    /* KEYBOARD */
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && (e.target.getAttribute('role') === 'button' || e.target.getAttribute('role') === 'link')) {
+        e.preventDefault(); e.target.click();
+      }
     });
+
+    /* INIT */
+    document.addEventListener('DOMContentLoaded', showRoot);
   </script>
 
 </body>
