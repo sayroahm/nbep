@@ -8,28 +8,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     /* ================================================================
-       NBEP ARCHIVE PORTAL
-       Design reference: U.S. Web Design System (USWDS) 3.x
-       Modeled after: archives.gov, justice.gov, dhs.gov
+       NBEP ARCHIVE
        Last updated: February 28, 2026
     ================================================================ */
 
-    /* ── RESET & BASE ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Primary palette – U.S. Government Navy */
       --navy:          #1b2a4a;
       --navy-dark:     #112035;
       --navy-light:    #2d4270;
       --navy-faint:    #e8ecf5;
 
-      /* Accent – Institutional Gold */
       --gold:          #8b6914;
       --gold-light:    #f5e9c8;
       --gold-border:   #d4a017;
 
-      /* Grays */
       --gray-5:        #f5f5f5;
       --gray-10:       #ebebeb;
       --gray-20:       #d6d7d9;
@@ -38,7 +32,6 @@
       --gray-70:       #454545;
       --gray-90:       #1b1b1b;
 
-      /* Status colors */
       --green-bg:      #ecf3ec;
       --green-border:  #2e8540;
       --green-text:    #1a4d27;
@@ -55,11 +48,9 @@
       --yellow-border: #d4a017;
       --yellow-text:   #7a4800;
 
-      /* Layout */
       --max-width:     1200px;
       --sidebar-w:     240px;
 
-      /* Typography */
       --font-sans:     'Source Sans 3', 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
       --font-serif:    'Merriweather', Georgia, 'Times New Roman', serif;
     }
@@ -80,7 +71,6 @@
     a:hover { color: var(--navy-light); }
     img { max-width: 100%; }
 
-    /* ── GOV BANNER ───────────────────────────────────────────────── */
     .gov-banner {
       background: var(--gray-5);
       border-bottom: 1px solid var(--gray-20);
@@ -133,7 +123,6 @@
       color: var(--gray-50);
     }
 
-    /* ── SITE HEADER ──────────────────────────────────────────────── */
     .site-header {
       background: var(--navy);
       color: #fff;
@@ -207,8 +196,6 @@
       color: rgba(255,255,255,0.85);
       font-variant-numeric: tabular-nums;
     }
-
-    /* ── PRIMARY NAV ──────────────────────────────────────────────── */
     .primary-nav { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.1); }
 
     .primary-nav-inner {
@@ -256,8 +243,6 @@
       background: rgba(212,160,23,0.25);
       color: #f5ca60;
     }
-
-    /* ── BREADCRUMB ───────────────────────────────────────────────── */
     .breadcrumb-bar { background: var(--gray-5); border-bottom: 1px solid var(--gray-20); }
 
     .breadcrumb-inner {
@@ -277,7 +262,6 @@
     .breadcrumb-inner .bc-sep { color: var(--gray-30); font-size: 0.7rem; }
     .breadcrumb-inner .bc-current { color: var(--gray-70); font-weight: 600; text-decoration: none; cursor: default; }
 
-    /* ── MAIN LAYOUT ──────────────────────────────────────────────── */
     .page-wrapper {
       max-width: var(--max-width);
       margin: 0 auto;
@@ -287,8 +271,6 @@
       gap: 2.5rem;
       align-items: start;
     }
-
-    /* ── LEFT SIDEBAR ─────────────────────────────────────────────── */
     .sidebar { position: sticky; top: 1.5rem; }
 
     .sidebar-section { margin-bottom: 2rem; }
@@ -366,10 +348,8 @@
     .sib-val.red   { color: var(--red-text);   }
     .sib-val.gold  { color: var(--gold);        }
 
-    /* ── MAIN CONTENT ─────────────────────────────────────────────── */
     .main { min-width: 0; }
 
-    /* ── VIEWS ────────────────────────────────────────────────────── */
     .view { display: none; }
     .view.active { display: block; animation: fadeSlide 0.18s ease forwards; }
 
@@ -378,7 +358,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── PAGE TITLE BLOCK ─────────────────────────────────────────── */
     .page-title-block {
       margin-bottom: 1.75rem;
       padding-bottom: 1.25rem;
@@ -423,7 +402,6 @@
 
     .page-meta-item strong { color: var(--gray-70); font-weight: 600; }
 
-    /* ── ALERT / NOTICE ───────────────────────────────────────────── */
     .alert {
       display: flex;
       gap: 0.75rem;
@@ -443,7 +421,6 @@
     .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
     .alert strong { font-weight: 700; }
 
-    /* ── STATS ROW ────────────────────────────────────────────────── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -488,7 +465,6 @@
 
     .stat-tile-sub { font-size: 0.78rem; color: var(--gray-50); }
 
-    /* ── SECTION HEADING ──────────────────────────────────────────── */
     .section-h2 {
       font-size: 0.7rem;
       font-weight: 700;
@@ -499,8 +475,6 @@
       padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--gray-20);
     }
-
-    /* ── FOLDER GRID ──────────────────────────────────────────────── */
     .folder-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -583,7 +557,6 @@
     .folder-card-arrow { color: var(--navy); font-size: 0.75rem; font-weight: 700; opacity: 0; transition: opacity 0.15s; }
     .folder-card:hover .folder-card-arrow { opacity: 1; }
 
-    /* ── FOLDER VIEW HEADER ───────────────────────────────────────── */
     .folder-view-header {
       display: flex;
       align-items: center;
@@ -622,7 +595,6 @@
 
     .folder-view-count { margin-left: auto; font-size: 0.8rem; color: var(--gray-50); white-space: nowrap; }
 
-    /* ── DOCUMENT TABLE ───────────────────────────────────────────── */
     .doc-table-wrapper { border: 1px solid var(--gray-20); border-radius: 4px; overflow: hidden; }
 
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
@@ -690,7 +662,6 @@
     .badge-ceo-order  { background: var(--gold-light);color: var(--gold);       }
     .badge-ceo-order  .badge-dot { background: var(--gold-border); }
 
-    /* ── EMPTY STATE ──────────────────────────────────────────────── */
     .empty-state {
       text-align: center;
       padding: 3.5rem 2rem;
@@ -703,7 +674,6 @@
     .empty-state-title { font-size: 1rem; font-weight: 700; color: var(--gray-70); margin-bottom: 0.3rem; }
     .empty-state-sub   { font-size: 0.85rem; color: var(--gray-50); }
 
-    /* ── INFO PANEL ───────────────────────────────────────────────── */
     .info-panel { border: 1px solid var(--gray-20); border-radius: 4px; background: #fff; margin-top: 2rem; overflow: hidden; }
 
     .info-panel-header {
@@ -731,7 +701,6 @@
     .ipr-key { color: var(--gray-50); }
     .ipr-val { font-weight: 600; color: var(--gray-90); }
 
-    /* ── FOOTER ───────────────────────────────────────────────────── */
     .site-footer {
       background: var(--navy-dark);
       color: rgba(255,255,255,0.7);
@@ -782,7 +751,6 @@
     .site-footer-bottom a { color: rgba(255,255,255,0.5); }
     .site-footer-bottom a:hover { color: rgba(255,255,255,0.8); }
 
-    /* ── RESPONSIVE ───────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .page-wrapper { grid-template-columns: 1fr; gap: 1.5rem; }
       .sidebar { position: static; }
@@ -807,16 +775,14 @@
 </head>
 <body>
 
-  <!-- GOV BANNER -->
   <div class="gov-banner" role="banner" aria-label="Official government website">
     <div class="gov-banner-inner">
       <span class="gov-flag" aria-hidden="true"></span>
       <span class="gov-banner-text">An <strong>official website</strong> of the National Bureau of Exploitation Protection</span>
-      <span class="gov-banner-lock" aria-label="Secure site indicator">🔒 Secure .nbep.gov</span>
+      <span class="gov-banner-lock" aria-label="Secure site indicator">Secure nbep.us</span>
     </div>
   </div>
 
-  <!-- SITE HEADER -->
   <header class="site-header" role="banner">
     <div class="site-header-inner">
       <a class="site-header-brand" href="#" onclick="showRoot(); return false;" aria-label="NBEP Home">
@@ -835,7 +801,6 @@
     </div>
   </header>
 
-  <!-- PRIMARY NAV -->
   <nav class="primary-nav" aria-label="Primary navigation">
     <div class="primary-nav-inner">
       <span class="primary-nav-item active" id="pnav-home"    onclick="showRoot();                        setPNav('home')"   role="button" tabindex="0">Home</span>
@@ -846,7 +811,6 @@
     </div>
   </nav>
 
-  <!-- BREADCRUMB -->
   <div class="breadcrumb-bar" aria-label="Breadcrumb">
     <div class="breadcrumb-inner">
       <span class="bc" onclick="showRoot(); setPNav('home')" role="link" tabindex="0">NBEP</span>
@@ -856,10 +820,8 @@
     </div>
   </div>
 
-  <!-- PAGE WRAPPER -->
   <div class="page-wrapper">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar" aria-label="Sidebar navigation">
 
       <div class="sidebar-section">
@@ -896,10 +858,8 @@
 
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main" id="main-content" role="main">
 
-      <!-- ═══ VIEW: ROOT ═══════════════════════════════════════════ -->
       <div class="view active" id="view-root">
 
         <div class="page-title-block">
@@ -1011,10 +971,9 @@
           </div>
         </div>
 
-      </div><!-- /view-root -->
+      </div>
 
 
-      <!-- ═══ VIEW: MOST WANTED ═══════════════════════════════════ -->
       <div class="view" id="view-wanted">
         <div class="folder-view-header">
           <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
@@ -1033,7 +992,6 @@
       </div>
 
 
-      <!-- ═══ VIEW: CERTIFICATIONS ════════════════════════════════ -->
       <div class="view" id="view-certs">
         <div class="folder-view-header">
           <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
@@ -1087,7 +1045,6 @@
       </div>
 
 
-      <!-- ═══ VIEW: MISCELLANEOUS ══════════════════════════════════ -->
       <div class="view" id="view-misc">
         <div class="folder-view-header">
           <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
@@ -1106,7 +1063,6 @@
       </div>
 
 
-      <!-- ═══ VIEW: CEO ORDERS ═════════════════════════════════════ -->
       <div class="view" id="view-ceo">
         <div class="folder-view-header">
           <button class="btn-back" onclick="showRoot(); setPNav('home'); setSNav('root')">← Back</button>
@@ -1145,9 +1101,8 @@
       </div>
 
     </main>
-  </div><!-- /page-wrapper -->
+  </div>
 
-  <!-- FOOTER -->
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer-inner">
       <div class="site-footer-top">
@@ -1194,7 +1149,6 @@
   <script>
     'use strict';
 
-    /* CLOCK */
     function pad2(n) { return String(n).padStart(2,'0'); }
     function updateClock() {
       const n = new Date();
@@ -1204,7 +1158,6 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    /* VIEW MANAGEMENT */
     const VIEWS = ['root','wanted','certs','misc','ceo'];
     const FOLDER_NAMES = { wanted:'Most Wanted', certs:'Employee Certification Documents', misc:'Miscellaneous', ceo:'Chief Executive Officer Orders' };
 
@@ -1223,21 +1176,18 @@
     function showRoot() { showView('root'); setSNav('root'); setPNav('home'); }
     function openFolder(name) { showView(name); setSNav(name); }
 
-    /* NAV */
     const PNAVS = ['home','wanted','certs','misc','ceo'];
     function setPNav(a) { PNAVS.forEach(n => { const e = document.getElementById('pnav-'+n); if(e) e.classList.toggle('active', n===a); }); }
 
     const SNAVS = ['root','wanted','certs','misc','ceo'];
     function setSNav(a) { SNAVS.forEach(n => { const e = document.getElementById('snav-'+n); if(e) e.classList.toggle('active', n===a); }); }
 
-    /* KEYBOARD */
     document.addEventListener('keydown', e => {
       if ((e.key === 'Enter' || e.key === ' ') && (e.target.getAttribute('role') === 'button' || e.target.getAttribute('role') === 'link')) {
         e.preventDefault(); e.target.click();
       }
     });
 
-    /* INIT */
     document.addEventListener('DOMContentLoaded', showRoot);
   </script>
 
