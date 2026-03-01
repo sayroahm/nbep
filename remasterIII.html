@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Bureau of Exploitation Protection | Official Vigilante Resource</title>
+    <link rel="icon" type="image/png" href="https://imgur.com/a/dYqMoHC">
+    
+    <style>
+        /* CSS Reset and Core Variables */
+        :root {
+            --primary-navy: #002147;
+            --secondary-blue: #003366;
+            --accent-gold: #c5a96d;
+            --alert-red: #981b1e;
+            --light-bg: #f4f4f4;
+            --border-gray: #cccccc;
+            --text-dark: #1a1a1a;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Disclaimer Banner */
+        .official-disclaimer {
+            background-color: #e1e1e1;
+            color: #333;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-gray);
+            letter-spacing: 0.5px;
+        }
+
+        /* Header Construction */
+        header {
+            background-color: var(--primary-navy);
+            color: var(--white);
+            border-bottom: 5px solid var(--accent-gold);
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 25px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .branding-block {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-placeholder {
+            width: 70px;
+            height: 70px;
+            margin-right: 20px;
+            border: 2px solid var(--accent-gold);
+            background-color: var(--white);
+        }
+
+        .identity h1 {
+            font-family: "Georgia", serif;
+            font-size: 26px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .identity p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation Bar */
+        .main-nav {
+            background-color: var(--secondary-blue);
+        }
+
+        .nav-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .nav-link {
+            padding: 15px 25px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            background-color: var(--accent-gold);
+            color: var(--primary-navy);
+        }
+
+        /* Hero Intelligence Image */
+        .hero-banner {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-text-area {
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-text-area h2 {
+            font-family: "Georgia", serif;
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero-text-area p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        /* Search Functionality Simulator */
+        .search-container {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .search-box input {
+            flex-grow: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid var(--border-gray);
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 0 30px;
+            background-color: var(--primary-navy);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Content Sections */
+        .main-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 50px;
+        }
+
+        .content-body h3 {
+            font-family: "Georgia", serif;
+            font-size: 28px;
+            color: var(--primary-navy);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .content-body p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        /* Custom Accordion for Procedures */
+        .protocol-list {
+            margin-top: 40px;
+        }
+
+        .protocol-item {
+            border: 1px solid var(--border-gray);
+            margin-bottom: 10px;
+        }
+
+        .protocol-trigger {
+            background-color: #eee;
+            padding: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: block;
+        }
+
+        .protocol-content {
+            padding: 20px;
+            background-color: var(--white);
+            display: none;
+        }
+
+        /* Sidebar Elements */
+        .sidebar-card {
+            background-color: var(--light-bg);
+            padding: 25px;
+            border-top: 4px solid var(--alert-red);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-card h4 {
+            margin-top: 0;
+            color: var(--alert-red);
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--alert-red);
+            color: white;
+            padding: 15px 0;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+
+        /* Footer Infrastructure */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 80px 0 40px 0;
+            margin-top: 100px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .footer-col h5 {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            max-width: 1200px;
+            margin: 60px auto 0 auto;
+            padding: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="official-disclaimer">
+        🇺🇸 NBEP is not affiliated with any government agency. We partner with local law enforcement to take action properly on cyber criminals.
+    </div>
+
+    <header>
+        <div class="header-main">
+            <div class="branding-block">
+                <div class="logo-placeholder">
+                    <a href="https://imgur.com/a/dYqMoHC">
+                        <img src="https://i.imgur.com/8Nn3vR5.png" alt="NBEP Logo" style="width:100%; height:auto;">
+                    </a>
+                </div>
+                <div class="identity">
+                    <h1>National Bureau of Exploitation Protection</h1>
+                    <p>Intelligence - Justice - Vigilance</p>
+                </div>
+            </div>
+            <div class="contact-header">
+                <span style="display:block; font-size:12px; text-align:right;">PORTAL ACCESS: nbep.us</span>
+                <span style="font-weight:700;">contacts@nbep.us</span>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="nav-wrapper">
+                <a href="#" class="nav-link">Executive Summary</a>
+                <a href="#" class="nav-link">Our Capabilities</a>
+                <a href="#" class="nav-link">Intelligence Reporting</a>
+                <a href="#" class="nav-link">Volunteer Corps</a>
+                <a href="#" class="nav-link">Agency Liaison</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-banner">
+        <div class="hero-text-area">
+            <h2>Neutralizing Exploitation Through Digital Intelligence</h2>
+            <p>NBEP monitors and identifies the manufacture and distribution of CSAM. We are a specialized vigilante force that compiles actionable intelligence packages for immediate handover to the FBI and local authorities.</p>
+            <div style="display:flex; justify-content:center; gap:20px;">
+                <a href="#report" class="action-btn" style="width:250px;">Initiate Tip Report</a>
+                <a href="#volunteer" class="action-btn" style="width:250px; background-color:transparent; border:2px solid white;">Volunteer Intelligence</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Search NBEP archives, protocol manuals, or agency contacts...">
+            <button type="button">SEARCH</button>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <div class="content-body">
+            <h3>Mission Directive</h3>
+            <p>The National Bureau of Exploitation Protection operates as a non-governmental intelligence gathering entity. Our primary objective is the systemic disruption of sexual exploitation networks. Unlike government agencies that are often slowed by bureaucratic layers, our vigilante collective moves with speed to identify predators and extract digital evidence.</p>
+            
+            <p>We believe that digital sovereignty comes with a responsibility to protect those who cannot protect themselves. Our team focuses on high-level target acquisition, mapping hidden network nodes, and verifying content legitimacy before engaging federal partners.</p>
+
+            <h3>How We Operationalize Intelligence</h3>
+            <div class="protocol-list">
+                <div class="protocol-item">
+                    <span class="protocol-trigger" onclick="toggleProtocol(this)">Stage 1: Identification & Tracking</span>
+                    <div class="protocol-content">
+                        NBEP volunteers utilize sophisticated OSINT tools to locate exploitation material across cleared and onion networks. We identify the source and the movement of illegal content.
+                    </div>
+                </div>
+                <div class="protocol-item">
+                    <span class="protocol-trigger" onclick="toggleProtocol(this)">Stage 2: Metadata Verification</span>
+                    <div class="protocol-content">
+                        Once identified, our tech specialists verify the metadata and geolocation markers of the evidence to ensure it meets the strict evidentiary standards of federal prosecutors.
+                    </div>
+                </div>
+                <div class="protocol-item">
+                    <span class="protocol-trigger" onclick="toggleProtocol(this)">Stage 3: Law Enforcement Handover</span>
+                    <div class="protocol-content">
+                        Verified packets are forwarded to the IC3, FBI Child Exploitation task forces, and local police chiefs. We provide a clear trail for them to execute warrants.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h4>Volunteer Notice</h4>
+                <p>NBEP does not officially hire personnel. We do not provide salaries, benefits, or official government credentials. You simply volunteer your technical skills for our vigilante group. Participation is based on merit and integrity.</p>
+                <a href="mailto:support@nbep.us" class="action-btn" style="background-color: var(--primary-navy);">Apply to Volunteer</a>
+            </div>
+
+            <div class="sidebar-card" style="border-top-color: var(--accent-gold); background-color: #fff; border: 1px solid var(--border-gray);">
+                <h4 style="color: var(--primary-navy);">Official Reporting Channels</h4>
+                <ul style="padding-left: 15px; font-size: 14px;">
+                    <li style="margin-bottom:10px;">FBI National Tip Line</li>
+                    <li style="margin-bottom:10px;">Internet Crime Complaint Center (IC3)</li>
+                    <li style="margin-bottom:10px;">National Center for Missing & Exploited Children</li>
+                    <li style="margin-bottom:10px;">Local Sheriff Office Network</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h5>About nbep.us</h5>
+                <p style="font-size:13px; line-height:1.6;">NBEP is a specialized coalition focused on cyber-intelligence and the reporting of criminal exploitation content to federal authorities.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Resources</h5>
+                <ul>
+                    <li><a href="#">Reporting Guidelines</a></li>
+                    <li><a href="#">Technical Requirements</a></li>
+                    <li><a href="#">Legal Boundaries</a></li>
+                    <li><a href="#">Public Records</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Collaboration</h5>
+                <ul>
+                    <li><a href="#">Law Enforcement Portal</a></li>
+                    <li><a href="#">NGO Partnerships</a></li>
+                    <li><a href="#">Media Inquiries</a></li>
+                    <li><a href="#">Security Bulletins</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <ul>
+                    <li>Primary: contacts@nbep.us</li>
+                    <li>Support: support@nbep.us</li>
+                    <li>Secure Channel: 1-800-NBEP-USA</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            Copyright &copy; 2024 National Bureau of Exploitation Protection. Not an agency of the United States Government. 
+            All volunteer contributions are governed by NBEP internal conduct standards. nbep.us is a private domain.
+        </div>
+    </footer>
+
+    <script>
+        function toggleProtocol(element) {
+            const content = element.nextElementSibling;
+            const isVisible = content.style.display === "block";
+            
+            // Close all others
+            document.querySelectorAll('.protocol-content').forEach(pc => pc.style.display = "none");
+            document.querySelectorAll('.protocol-trigger').forEach(pt => pt.style.backgroundColor = "#eee");
+
+            if (!isVisible) {
+                content.style.display = "block";
+                element.style.backgroundColor = "#ddd";
+            }
+        }
+    </script>
+</body>
+</html>
