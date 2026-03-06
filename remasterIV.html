@@ -48,42 +48,56 @@
 
       /* NBEP Home Banner */
         .home-banner {
-            background-color: #3C47AF;
-            width: 100%;
-            min-height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
+    background-color: #3C47AF;
+    width: 100%;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
 
-        .home-banner-text h2,
-        .home-banner-text h4 {
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
+.home-banner-content {
+    display: flex;
+    flex-direction: column; /* stack text and button vertically */
+    align-items: center;    /* center horizontally */
+}
 
-        .home-banner-text h2 {
-            font-size: 2rem;
-            font-weight: 700;
-        }
+.home-banner-text h2,
+.home-banner-text h4 {
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
 
-        .home-banner-text h4 {
-            font-size: 1.2rem;
-            font-weight: 400;
-            margin-top: 10px;
-        }
+.home-banner-text h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
 
-        .home-banner-button {
-            background-color:#a6e1ff;
-            margin-top:15px;
-            font-size:1.2rem;
-            color:white;
-            font-family: Arial, sans-serif;
-            margin:0;
-        }
+.home-banner-text h4 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.home-banner-button {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #3C47AF;
+    background-color: #a6e1ff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.home-banner-button:hover {
+    background-color: #7ecfff;
+    transform: translateY(-2px);
+}
       
     </style>
   </head>
@@ -95,11 +109,13 @@
       <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
     </div>
     <div class="home-banner">
-      <div class="home-banner-text">
-        <h2>National Bureau of Exploitation Protection</h2>
-        <h4>Non-profit Organization for Cyber Crime Reporting.</h4>
+      <div class="home-banner-content">
+        <div class="home-banner-text">
+          <h2>National Bureau of Exploitation Protection</h2>
+          <h4>Non-profit Organization for Cyber Crime Reporting.</h4>
+        </div>
+        <button id="homeBannerBtn" class="home-banner-button">What We Do</button>
       </div>
-      <button class="home-banner-button">What We Do</button>
     </div>
 
     <script>
