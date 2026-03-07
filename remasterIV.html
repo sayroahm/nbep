@@ -54,6 +54,9 @@
         display:flex;
         align-items:center;
         padding:0 25px;
+		position:relative;
+		box-sizing:border-box;
+		width:100%;
       }
 
       .dropdown-logo{
@@ -310,8 +313,8 @@
     </div>
 
     <script>
-console.log("Version: Lakewood I.142")
-			console.log("Bug Report: n/a")
+			console.log("Version: Lakewood I.142.5")
+			console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).")
 
 			// Button
 			const hbBtn = document.getElementById("homeBannerBtn");
@@ -325,7 +328,7 @@ console.log("Version: Lakewood I.142")
 			// Create a container for the dropdown
 			const toolbar = document.querySelector(".toolbar");
 			const dropdown = document.createElement("div");
-			dropdown.style.position = "absolute";
+			dropdown.style.position = "fixed";
 			dropdown.style.top = "70px";
 			dropdown.style.right = "10px";
 			dropdown.style.width = "300px";
@@ -337,7 +340,7 @@ console.log("Version: Lakewood I.142")
 			dropdown.style.zIndex = "9999";
 			dropdown.style.maxHeight = "400px";
 			dropdown.style.overflowY = "auto";
-			toolbar.appendChild(dropdown);
+			document.body.appendChild(dropdown);
 
 			// Add X button
 			const clearBtn = document.createElement("span");
@@ -350,7 +353,7 @@ console.log("Version: Lakewood I.142")
 			clearBtn.style.display = "none";
 			clearBtn.style.color = "#888";
 			clearBtn.style.fontSize = "16px";
-			toolbar.appendChild(clearBtn);
+			document.body.appendChild(clearBtn);
 
 			clearBtn.addEventListener("click", () => {
 						searchInput.value = "";
