@@ -293,7 +293,7 @@
 		  background-color: #f0eedc;
 		}
 
-		/* Image Gallery */
+		/* Image Gallery (DEPRECATED) 
 		.gallery {
 			max-width: 1200px;
 			margin:30px auto;
@@ -336,7 +336,209 @@
 
 		.gallery-dot.active {
 			background: white;
+		}*/
+
+		/* Window Popup for Help (Context Menu) */
+		.vista-overlay {
+			display:none;
+			position:fixed;
+			top:0; left:0;
+			width: 100%; height:100%;
+			background: rgba(0,0,0,0.45);
+			z-index:999998;
 		}
+
+		.vista-window {
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width:480px;
+			z-index:999999;
+			border-radius: 8px 8px 6px 6px;
+			box-shadow:
+				0 0 0 1px #4a6fa5,
+				0 0 0 2px #1a3a6b,
+				0 8px 32px rgba(0,0,0,0.6);
+			overflow: hidden;
+			font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+		}
+
+		.vista-titlebar {
+  background: linear-gradient(180deg,
+    #4a90d9 0%,
+    #2a6bbf 40%,
+    #1a52a0 60%,
+    #2a6bbf 100%
+  );
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1a3a6b;
+}
+
+.vista-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.vista-titlebar-icon {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #4a90d9);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.vista-titlebar-text {
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  letter-spacing: 0.3px;
+}
+
+.vista-close {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #8b1a1a;
+  background: radial-gradient(circle at 40% 30%,
+    #ff6b6b,
+    #cc0000 60%,
+    #8b0000
+  );
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
+  transition: brightness 0.15s;
+}
+
+.vista-close:hover {
+  filter: brightness(1.2);
+}
+
+.vista-body {
+  background: linear-gradient(180deg, #f0f4fb 0%, #dce6f5 100%);
+  padding: 0;
+}
+
+.vista-content {
+  padding: 20px 22px 16px 22px;
+  border-bottom: 1px solid #b8cce4;
+}
+
+.vista-content-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.vista-content-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 35% 30%,
+    #ffffff,
+    #4a90d9 50%,
+    #1a52a0
+  );
+  border-radius: 8px;
+  border: 1px solid #4a6fa5;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.vista-content-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a3a6b;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.vista-content-subtitle {
+  font-size: 12px;
+  color: #4a6fa5;
+  margin-top: 2px;
+}
+
+.vista-content p {
+  font-size: 13px;
+  color: #222;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+.vista-content ul {
+  margin: 0 0 10px 0;
+  padding-left: 20px;
+}
+
+.vista-content ul li {
+  font-size: 13px;
+  color: #222;
+  line-height: 1.8;
+}
+
+.vista-footer {
+  background: linear-gradient(180deg, #dce6f5 0%, #c8d8ee 100%);
+  padding: 10px 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid #b8cce4;
+}
+
+.vista-btn {
+  padding: 5px 18px;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #4a6fa5;
+  background: linear-gradient(180deg,
+    #f0f6ff 0%,
+    #d0e4f8 50%,
+    #b8d0f0 51%,
+    #cce0ff 100%
+  );
+  color: #1a3a6b;
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 1px 2px rgba(0,0,0,0.15);
+  transition: filter 0.15s;
+}
+
+.vista-btn:hover {
+  filter: brightness(1.07);
+}
+
+.vista-btn-primary {
+  border-color: #1a3a6b;
+  background: linear-gradient(180deg,
+    #4a90d9 0%,
+    #2a6bbf 50%,
+    #1a52a0 51%,
+    #2a70cc 100%
+  );
+  color: white;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 1px 2px rgba(0,0,0,0.3);
+}
 		
     </style>
   </head>
@@ -359,13 +561,63 @@
         to upper the chance of investigation to a possible case.
       </p></div>
 
-	<div class="gallery"> <div class="gallery-track" id="galleryTrack"> <img src="gallery/nbeplogo.png" alt="TrackImg1"> <img src="gallery/felixlogo.png" alt="TrackImg2"> <img src="gallery/noaffiliation.png" alt="TrackImg3"> </div>
+	<!--<div class="gallery"> <div class="gallery-track" id="galleryTrack"> <img src="gallery/nbeplogo.png" alt="TrackImg1"> <img src="gallery/felixlogo.png" alt="TrackImg2"> <img src="gallery/noaffiliation.png" alt="TrackImg3"> </div>-->
+	<div class="vista-overlay" id="vistaOverlay"></div>
+	<div class="vista-window" id="vistaHelp">
+  <div class="vista-titlebar">
+    <div class="vista-titlebar-left">
+      <div class="vista-titlebar-icon"></div>
+      <span class="vista-titlebar-text">NBEP Help Center</span>
+    </div>
+    <div class="vista-close" id="vistaClose">✕</div>
+  </div>
 
+  <div class="vista-body">
+    <div class="vista-content">
+      <div class="vista-content-header">
+        <div class="vista-content-icon">?</div>
+        <div>
+          <div class="vista-content-title">NBEP Help Center</div>
+          <div class="vista-content-subtitle">National Bureau of Exploitation Protection</div>
+        </div>
+      </div>
+
+      <p>
+        Welcome to the NBEP Help Center. This organization is a
+        <strong>non-government, non-profit</strong> body dedicated
+        to cyber crime reporting and public awareness.
+      </p>
+
+      <p>Here is what you can do on this site:</p>
+
+      <ul>
+        <li>Browse the <strong>Most Wanted</strong> list</li>
+        <li>Submit an anonymous tip via <strong>Report Crime</strong></li>
+        <li>Read the latest <strong>News</strong> and updates</li>
+        <li>Learn <strong>What We Investigate</strong></li>
+        <li>Access <strong>Resources</strong> for victims</li>
+      </ul>
+
+      <p>
+        For emergencies, always call <strong>911</strong> or contact
+        your local law enforcement agency directly.
+      </p>
+    </div>
+
+    <div class="vista-footer">
+      <button class="vista-btn" id="vistaCloseBtn">Close</button>
+      <button class="vista-btn vista-btn-primary"
+        onclick="window.location.href='/resources'">
+        View Resources
+      </button>
+    </div>
+  </div>
+</div>
 <script>
   // Version Log
   // Change the version number for every commit made.
-  console.log("Version: Lakewood I.144");
-  console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).");
+  console.log("Version: Lakewood I.145");
+  console.log("Bug Report: Removed bugged gallery, added window opens to the Help context menu.");
 
   // Button
   const hbBtn = document.getElementById("homeBannerBtn");
@@ -512,11 +764,16 @@
   contextMenu.classList.add("custom-context-menu");
   contextMenu.innerHTML = `
     <a href="/resources">Resources</a>
-    <a href="/help">Help</a>
+    <a href="#" id="contextHelp">Help</a>
     <a href="/admin-login">Admin Login</a>
     <a href="/info">What We Investigate</a>
   `;
   document.body.appendChild(contextMenu);
+  document.getElementById("contextHelp").addEventListener("click", (e) => {
+ 	 e.preventDefault();
+ 	 contextMenu.style.display = "none";
+	  openVista();
+	});
 
   document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -534,43 +791,25 @@
   document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
   document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
 
-const track       = document.getElementById("galleryTrack");
-const dotsContainer = document.getElementById("galleryDots");
-const images      = track.querySelectorAll("img");
-let currentSlide  = 0;
-let galleryTimer;
+	// Vista Help Window
+const vistaHelp      = document.getElementById("vistaHelp");
+const vistaOverlay   = document.getElementById("vistaOverlay");
+const vistaClose     = document.getElementById("vistaClose");
+const vistaCloseBtn  = document.getElementById("vistaCloseBtn");
 
-images.forEach((_, i) => {
-  const dot = document.createElement("div");
-  dot.classList.add("gallery-dot");
-  if (i === 0) dot.classList.add("active");
-  dot.addEventListener("click", () => {
-    goToSlide(i);
-    resetTimer();
-  });
-  dotsContainer.appendChild(dot);
-});
-
-function goToSlide(index) {
-  images[currentSlide].parentElement;
-  currentSlide = index;
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-  document.querySelectorAll(".gallery-dot").forEach((dot, i) => {
-    dot.classList.toggle("active", i === currentSlide);
-  });
+function openVista() {
+  vistaHelp.style.display    = "block";
+  vistaOverlay.style.display = "block";
 }
 
-function nextSlide() {
-  goToSlide((currentSlide + 1) % images.length);
+function closeVista() {
+  vistaHelp.style.display    = "none";
+  vistaOverlay.style.display = "none";
 }
 
-function resetTimer() {
-  clearInterval(galleryTimer);
-  galleryTimer = setInterval(nextSlide, 9000);
-}
-
-resetTimer();
-</script>
+vistaClose.addEventListener("click", closeVista);
+vistaCloseBtn.addEventListener("click", closeVista);
+vistaOverlay.addEventListener("click", closeVista);
+	</script>
   </body>
 </html>
