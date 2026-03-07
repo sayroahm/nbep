@@ -266,96 +266,105 @@
 
 	/* NBEP Customs Context Menu */
 		.custom-context-menu {
- 			  display: none;
-			  position: fixed;
-			  z-index: 99999;
-			  background-color: #fffef0;
-			  border: 1.5px solid #000000;
-			  min-width: 180px;
-			  font-family: Arial, sans-serif;
-			}
+ 		  display: none;
+		  position: fixed;
+		  z-index: 99999;
+		  background-color: #fffef0;
+		  border: 1.5px solid #000000;
+		  min-width: 180px;
+		  font-family: Arial, sans-serif;
+		}
 
-			.custom-context-menu a {
-			  display: block;
-			  padding: 12px 15px;
- 			  text-decoration: none;
-			  color: black;
- 			  font-weight: 600;
-			  font-size: 15px;
- 			  border-bottom: 1px solid #e8e6d8;
-			}
+		.custom-context-menu a {
+		  display: block;
+		  padding: 12px 15px;
+ 		  text-decoration: none;
+		  color: black;
+ 		  font-weight: 600;
+		  font-size: 15px;
+ 		  border-bottom: 1px solid #e8e6d8;
+		}
 
-			.custom-context-menu a:last-child {
-			  border-bottom: none;
-			}
+		.custom-context-menu a:last-child {
+		  border-bottom: none;
+		}
 
-			.custom-context-menu a:hover {
-			  background-color: #f0eedc;
-			}
-      
+		.custom-context-menu a:hover {
+		  background-color: #f0eedc;
+		}
+
+		/* Image Gallery */
+		.gallery {
+			max-width: 1200px;
+			margin:30px auto;
+			position: relative;
+			overflow: relative;
+			border-radius: 10px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+		}
+
+		.gallery-track {
+			display: flex;
+			transition: transform 0.6s ease;
+		}
+
+		.gallery-track img {
+			min-width: 100%;
+			height: 420px;
+			object-fit: cover;
+			display: block;
+		}
+
+		.gallery-dots {
+			position: absolute;
+			bottom: 12px;
+			left: 50%;
+			transform: translateX(-50%);
+			display:flex;
+			gap: 8px;
+		}
+
+		.gallery-dot {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: rgba(255,255,255,0.5);
+			border: 1.5px solid white;
+			cursor: pointer;
+			transition: background 0.3s ease;
+		}
+
+		.gallery-dot.active {
+			background: white;
+		}
+		
     </style>
   </head>
   <body>
-    <div class="banner">
-      <img src="nbeplogo.png" alt="logo">
-      <img class="img2" src="usflag.png" alt="usflag">
-      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
-      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
-    </div>
+    <div class="banner"> <img src="nbeplogo.png" alt="logo"> <img class="img2" src="usflag.png" alt="usflag"> <p>This is an official site of the NBEP. A non-profit non-government organization.</p> <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a></div>
     
-    <div class="toolbar">
-      <div class="dropdown-logo">
-        <img src="nbeplogo.png" alt="menu">
-        <div class="dropdown-menu">
-          <a href="#">Home</a>
-          <a href="/wanted">Most Wanted</a>
-          <a href="/submit-a-tip">Report Crime</a>
-          <a href="/resources">Resources</a>
-          <a href="/contact-us">Contact</a>
-        </div>
-      </div>
+    <div class="toolbar"> <div class="dropdown-logo"> <img src="nbeplogo.png" alt="menu"> <div class="dropdown-menu"> <a href="#">Home</a> <a href="/wanted">Most Wanted</a> <a href="/submit-a-tip">Report Crime</a> <a href="/resources">Resources</a> <a href="/contact-us">Contact</a></div></div>
 
-      <div class="toolbar-nav">
-        <a href="#">Home</a>
-        <a href="/wanted">Most Wanted</a>
-        <a href="/news">News</a>
-        <a href="/info">What We Investigate</a>
-      </div>
+      <div class="toolbar-nav"> <a href="#">Home</a> <a href="/wanted">Most Wanted</a> <a href="/news">News</a> <a href="/info">What We Investigate</a></div>
 
       <!-- Search Box -->
-      <div class="toolbar-search">
-        <div class="search-box">
-          <img src="searchicon.png" alt="search">
-          <input type="text" placeholder="Search" id="toolbarSearch">
-        </div>
-      </div>
-    </div>
+      <div class="toolbar-search"><div class="search-box"><img src="searchicon.png" alt="search"> <input type="text" placeholder="Search" id="toolbarSearch"></div></div></div>
     
-    <div class="home-banner">
-      <div class="home-banner-content">
-        <div class="home-banner-text">
-          <h2>National Bureau of Exploitation Protection</h2>
-          <h4>Non-profit Organization for Cyber Crime Reporting.</h4>
-        </div>
-        <button id="homeBannerBtn" class="home-banner-button">What We Investigate</button>
-      </div>
-    </div>
-    <div class="home-warn">
-      <div class="warn-icon">!</div>
-      <h3>Disclaimer:</h3>
-      <p>
+    <div class="home-banner"><div class="home-banner-content"><div class="home-banner-text"><h2>National Bureau of Exploitation Protection</h2><h4>Non-profit Organization for Cyber Crime Reporting.</h4></div><button id="homeBannerBtn" class="home-banner-button">What We Investigate</button></div></div>
+    <div class="home-warn"><div class="warn-icon">!</div><h3>Disclaimer:</h3><p>
         The National Bureau of Exploitation Protection is a non-government,
         non-profit organization dedicated to assisting with cyber crime
         reporting and awareness. If there is any emergency, call 911 or
         contact your local law enforcement agency. We act as a middle-man
         to upper the chance of investigation to a possible case.
-      </p>
-    </div>
+      </p></div>
+
+	<div class="gallery"> <div class="gallery-track" id="galleryTrack"> <img src="gallery/nbeplogo.png" alt="TrackImg1"> <img src="gallery/felixlogo.png" alt="TrackImg2"> <img src="gallery/noaffiliation.png" alt="TrackImg3"> </div>
 
 <script>
   // Version Log
   // Change the version number for every commit made.
-  console.log("Version: Lakewood I.143");
+  console.log("Version: Lakewood I.144");
   console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).");
 
   // Button
@@ -524,6 +533,44 @@
 
   document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
   document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+
+const track       = document.getElementById("galleryTrack");
+const dotsContainer = document.getElementById("galleryDots");
+const images      = track.querySelectorAll("img");
+let currentSlide  = 0;
+let galleryTimer;
+
+images.forEach((_, i) => {
+  const dot = document.createElement("div");
+  dot.classList.add("gallery-dot");
+  if (i === 0) dot.classList.add("active");
+  dot.addEventListener("click", () => {
+    goToSlide(i);
+    resetTimer();
+  });
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(index) {
+  images[currentSlide].parentElement;
+  currentSlide = index;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+  document.querySelectorAll(".gallery-dot").forEach((dot, i) => {
+    dot.classList.toggle("active", i === currentSlide);
+  });
+}
+
+function nextSlide() {
+  goToSlide((currentSlide + 1) % images.length);
+}
+
+function resetTimer() {
+  clearInterval(galleryTimer);
+  galleryTimer = setInterval(nextSlide, 9000);
+}
+
+resetTimer();
 </script>
   </body>
 </html>
