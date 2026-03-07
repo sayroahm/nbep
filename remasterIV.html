@@ -225,6 +225,21 @@
         transform: translateY(-2px);
       }
 
+	/* Home Banner Resources Link */
+	  .home-banner-resources{
+ 		margin-top: 12px;
+ 		font-size: 1.1rem;
+	    font-weight: 600;
+  		color: #000000;
+		text-decoration: none;
+	    transition: color 0.25s ease, text-decoration 0.25s ease;
+	  }
+
+	  .home-banner-resources:hover{
+  		color: #ffd900;
+  		text-decoration: underline;
+	  }
+
       /* Clarification Banner/Warning Box */
 
       .home-warn{
@@ -548,7 +563,7 @@
       <div class="toolbar-nav"> <a href="#">Home</a> <a href="/wanted">Most Wanted</a> <a href="/news">News</a> <a href="/info">What We Investigate</a></div>
       <!-- Search Box -->
       <div class="toolbar-search"><div class="search-box"><img src="searchicon.png" alt="search"> <input type="text" placeholder="Search" id="toolbarSearch"></div></div></div>
-    <div class="home-banner"><div class="home-banner-content"><div class="home-banner-text"><h2>National Bureau of Exploitation Protection</h2><h4>Non-profit Organization for Cyber Crime Reporting.</h4></div><button id="homeBannerBtn" class="home-banner-button">What We Investigate</button><button id="homeBannerBtn2" class="home-banner-button">Resources</button></div></div>
+    <div class="home-banner"><div class="home-banner-content"><div class="home-banner-text"><h2>National Bureau of Exploitation Protection</h2><h4>Non-profit Organization for Cyber Crime Reporting.</h4></div><button id="homeBannerBtn" class="home-banner-button">What We Investigate</button><a href="/resources" class="home-banner-resources">Resources</a></div></div>
     <div class="home-warn"><div class="warn-icon">!</div><h3>Disclaimer:</h3><p>
         The National Bureau of Exploitation Protection is a non-government,
         non-profit organization dedicated to assisting with cyber crime
@@ -613,19 +628,19 @@
 <script>
   // Version Log
   // Change the version number for every commit made.
-  console.log("Version: Lakewood I.149");
+  console.log("Version: Lakewood I.150");
   console.log("Bug Report: Removed bugged gallery, added window opens to the Help context menu.");
 
   // Button
-  const hbBtn2 = document.getElementById("homeBannerBtn2");
+  //const hbBtn2 = document.getElementById("homeBannerBtn2");
   const hbBtn = document.getElementById("homeBannerBtn");
   hbBtn.onclick = function() {
     window.location.href = "/info";
   }
 
-  hbBtn2.onclick = function() {
-	  window.location.href = "/resources";
-  }
+ // hbBtn2.onclick = function() {
+	//  window.location.href = "/resources";
+  //}
   // Search
   const searchInput = document.getElementById("toolbarSearch");
   searchInput.style.borderRadius = "8px";
