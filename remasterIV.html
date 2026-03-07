@@ -50,33 +50,18 @@
 
       .toolbar{
         background-color:#000000;
-        padding:12px 20px;
+        height:70px;
         display:flex;
         align-items:center;
-        gap:40px;
-      }
-
-      .toolbar a{
-        color:white;
-        text-decoration:none;
-        font-weight:700;
-        font-size:18px;
-        letter-spacing:2px;
-        text-transform:uppercase;
-        font-family:Arial, sans-serif;
-      }  
-
-      .toolbar a:hover{
-        text-decoration:underline;
+        padding:0 25px;
       }
 
       .dropdown-logo{
         position:relative;
-        display:inline-block;
       }
 
       .dropdown-logo img{
-        height:45px;
+        height:48px;
         width:auto;
         border:2px solid white;
         border-radius:6px;
@@ -86,16 +71,16 @@
       .dropdown-menu{
         display:none;
         position:absolute;
-        top:100%;
+        top:60px;
         left:0;
         background-color:white;
-        min-width:180px;
+        min-width:200px;
         border:2px solid black;
       }
 
       .dropdown-menu a{
         display:block;
-        padding:10px;
+        padding:12px 15px;
         text-decoration:none;
         color:black;
         font-weight:600;
@@ -107,6 +92,26 @@
 
       .dropdown-logo:hover .dropdown-menu{
         display:block;
+      }
+
+      .toolbar-nav{
+        display:flex;
+        gap:60px;
+        margin-left:60px;
+      }
+
+      .toolbar-nav a{
+        color:white;
+        text-decoration:none;
+        font-weight:700;
+        font-size:22px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+      }
+
+      .toolbar-nav a:hover{
+        border-bottom:2px solid white;
+        padding-bottom:4px;
       }
       
       /* NBEP Home Banner */
@@ -202,7 +207,7 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.131")
+      console.log("Version: Lakewood I.132")
       console.log("Bug Report: Margin between menu and dropdown icon removed")
     </script>
   </body>
