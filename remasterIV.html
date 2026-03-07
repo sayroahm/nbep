@@ -310,79 +310,149 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.141")
-      console.log("Bug Report: Better searching algorithm")
-      // Button
-      const hbBtn = document.getElementById("homeBannerBtn");
+console.log("Version: Lakewood I.142")
+			console.log("Bug Report: n/a")
 
-      hbBtn.onclick = function() {
-        window.location.href = "/info";
-      }
+			// Button
+			const hbBtn = document.getElementById("homeBannerBtn");
+			hbBtn.onclick = function() {
+						window.location.href = "/info";
+			}
 
-      // Search
-      const searchInput = document.getElementById("toolbarSearch");
+			// Search
+			const searchInput = document.getElementById("toolbarSearch");
 
-      searchInput.addEventListener("keydown", function(event){
-        if(event.key === "Enter"){
-          const query = searchInput.value.trim().toLowerCase();
-          if(!query) return;
+			// Create a container for the dropdown
+			const toolbar = document.querySelector(".toolbar");
+			const dropdown = document.createElement("div");
+			dropdown.style.position = "absolute";
+			dropdown.style.top = "70px";
+			dropdown.style.right = "10px";
+			dropdown.style.width = "300px";
+			dropdown.style.background = "#fff";
+			dropdown.style.border = "1px solid #ccc";
+			dropdown.style.borderRadius = "6px";
+			dropdown.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+			dropdown.style.display = "none";
+			dropdown.style.zIndex = "9999";
+			dropdown.style.maxHeight = "400px";
+			dropdown.style.overflowY = "auto";
+			toolbar.appendChild(dropdown);
 
-         const pages = [
-            {url:"/remasterIV", content:["info","help","nbep","commissioner"]},
-            //{url:"/submit-a-tip", content:["tip","report","crime","submit"]},
-            //{url:"/news", content:["news","update","report","press"]},
-            //{url:"/wanted", content:["wanted","criminal","most wanted"]},
-            //{url:"/info", content:["info","investigate","what we do","cyber"]}
-          ];
+			// Add X button
+			const clearBtn = document.createElement("span");
+			clearBtn.textContent = "✕";
+			clearBtn.style.position = "absolute";
+			clearBtn.style.right = "15px";
+			clearBtn.style.top = "50%";
+			clearBtn.style.transform = "translateY(-50%)";
+			clearBtn.style.cursor = "pointer";
+			clearBtn.style.display = "none";
+			clearBtn.style.color = "#888";
+			clearBtn.style.fontSize = "16px";
+			toolbar.appendChild(clearBtn);
 
-          const bodyText = document.body.innerText.toLowerCase();
-          if(bodyText.includes(query)){
-            const regex = new RegExp(`(${query})`, "gi");
-            const highlighted = document.body.innerHTML.replace(regex, '<mark style="background-color:#ffd900;color:#000;">$1</mark>');
-            document.body.innerHTML = highlighted;
-            console.log("Found on current page:", query);
-            return;
-          }
+			clearBtn.addEventListener("click", () => {
+						searchInput.value = "";
+						dropdown.innerHTML = "";
+						dropdown.style.display = "none";
+						clearBtn.style.display = "none";
+			});
 
-          function scoreMatch(query, keywords){
-            let score = 0;
-            for(const keyword of keywords){
-              if(query === keyword) score += 5;
-              else if(query.includes(keyword)) score += 3;
-              else if(keyword.includes(query)) score += 2;
-              else if(fuzzyMatch(query, keyword)) score += 1;
-            }
-            return score;
-          }
+			searchInput.style.borderRadius = "8px";
+			searchInput.style.paddingRight = "25px";
 
-          function fuzzyMatch(a,b){
-            if(!a || !b) return false;
-            a = a.toLowerCase(); b = b.toLowerCase();
-            let matches = 0;
-            const minLen = Math.min(a.length,b.length);
-            for(let i=0;i<minLen;i++){
-              if(a[i]===b[i]) matches++;
-            }
-            return matches / minLen >= 0.6;
-          }
+			const pages = [
+						{url:"/remasterIV", title:"Remaster IV", content:["info","help","nbep","commissioner"]},
+						{url:"/submit-a-tip", title:"Submit a Tip", content:["tip","report","crime","submit"]},
+						{url:"/news", title:"News", content:["news","update","report","press"]},
+						{url:"/wanted", title:"Most Wanted", content:["wanted","criminal","most wanted"]},
+						{url:"/info", title:"What We Investigate", content:["info","investigate","what we do","cyber"]}
+			];
 
-          let bestPage = null;
-          let bestScore = 0;
-          for(const page of pages){
-            const s = scoreMatch(query, page.content);
-            if(s > bestScore){
-              bestScore = s;
-              bestPage = page;
-            }
-          }
+			function fuzzyScore(a,b){
+						if(!a||!b) return 0;
+						a=a.toLowerCase(); b=b.toLowerCase();
+						let score=0;
+						const minLen = Math.min(a.length,b.length);
+						for(let i=0;i<minLen;i++){
+									if(a[i]===b[i]) score++;
+						}
+						return score/minLen;
+			}
 
-          if(bestPage && bestScore > 0){
-            window.location.href = bestPage.url;
-          } else {
-            console.log("No match found for: " + query);
-          }
-       }
-      });
+			function searchAlgorithm(query){
+						query=query.toLowerCase();
+						const results=[];
+						const bodyText = document.body.innerText;
+						const lines = bodyText.split("\n");
+						for(let line of lines){
+									if(line.toLowerCase().includes(query)){
+												let snippet = line.trim();
+												if(snippet.length>80) snippet = snippet.slice(0,80) + "...";
+												results.push({title:"Current Page", url:window.location.href, snippet, score:5});
+									}
+						}
+						for(let page of pages){
+									let score = 0;
+									for(let keyword of page.content){
+												if(query === keyword) score += 5;
+												else if(query.includes(keyword)) score += 3;
+												else if(keyword.includes(query)) score += 2;
+												else score += fuzzyScore(query,keyword);
+									}
+									if(score>0){
+												results.push({title:page.title, url:page.url, snippet:"", score});
+									}
+						}
+						results.sort((a,b)=>b.score-a.score);
+						return results.slice(0,5);
+			}
+
+			function renderDropdown(results){
+						dropdown.innerHTML="";
+						if(results.length===0){
+									const div=document.createElement("div");
+									div.textContent="No results found";
+									div.style.padding="10px";
+									dropdown.appendChild(div);
+						} else {
+									for(let r of results){
+												const item=document.createElement("a");
+												item.href=r.url;
+												item.style.display="block";
+												item.style.padding="8px 10px";
+												item.style.borderBottom="1px solid #eee";
+												item.style.textDecoration="none";
+												item.style.color="#333";
+
+												const title=document.createElement("div");
+												title.textContent=r.title;
+												title.style.fontWeight="600";
+												const snippet=document.createElement("div");
+												snippet.textContent=r.snippet;
+												snippet.style.fontSize="12px";
+												snippet.style.color="#666";
+
+												item.appendChild(title);
+												if(r.snippet) item.appendChild(snippet);
+												dropdown.appendChild(item);
+									}
+						}
+						dropdown.style.display="block";
+						clearBtn.style.display="block";
+			}
+
+			searchInput.addEventListener("input",()=>{
+						const query = searchInput.value.trim();
+						if(query===""){
+									dropdown.style.display="none";
+									clearBtn.style.display="none";
+						} else {
+									const results = searchAlgorithm(query);
+									renderDropdown(results);
+						}
+			});
     </script>
   </body>
 </html>
