@@ -116,6 +116,42 @@
         color:#ffd900;
         border-bottom:2px solid #ffd900;
       }
+
+      /* Toolbar Search */
+
+      .toolbar-search{
+        margin-left:auto;
+        margin-right:10px;
+      }
+
+      .search-box{
+        display:flex;
+        align-items:center;
+        background:white;
+        border-radius:20px;
+        padding:6px 12px;
+        border:1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .search-box:focus-within{
+        box-shadow:0 0 0 2px #ffd900;
+      }
+
+      .search-box img{
+        width:16px;
+        height:16px;
+        margin-right:8px;
+        opacity:0.7;
+      }
+
+      .search-box input{
+        border:none;
+        outline:none;
+        font-size:14px;
+        width:160px;
+        font-family:Arial, sans-serif;
+      }
       
       /* NBEP Home Banner */
       .home-banner{
@@ -223,6 +259,13 @@
       <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
       <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
     </div>
+    
+    <div class="toolbar-search">
+      <div class="search-box">
+        <img src="searchicon.png" alt="search">
+        <input type="text" placeholder="Search">
+      </div>
+    </div>
     <div class="toolbar">
 
     <div class="dropdown-logo">
@@ -234,14 +277,12 @@
             <a href="/contact-us">Contact</a>
           </div>
         </div>
-
         <div class="toolbar-nav">
           <a href="#">Home</a>
           <a href="/wanted">Most Wanted</a>
           <a href="/news">News</a>
-          <a href="/info">What We Do</a>
+          <a href="/info">What We Investigate</a>
         </div>
-
     </div>
     <div class="home-banner">
       <div class="home-banner-content">
@@ -249,7 +290,7 @@
           <h2>National Bureau of Exploitation Protection</h2>
           <h4>Non-profit Organization for Cyber Crime Reporting.</h4>
         </div>
-        <button id="homeBannerBtn" class="home-banner-button">What We Do</button>
+        <button id="homeBannerBtn" class="home-banner-button">What We Investigate</button>
       </div>
     </div>
     <div class="home-warn">
@@ -265,7 +306,7 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.138")
+      console.log("Version: Lakewood I.138.5")
       console.log("Bug Report: n/a")
 
       // Button
