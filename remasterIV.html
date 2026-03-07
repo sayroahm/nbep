@@ -310,9 +310,8 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.140")
-      console.log("Bug Report: n/a")
-
+      console.log("Version: Lakewood I.141")
+      console.log("Bug Report: Better searching algorithm")
       // Button
       const hbBtn = document.getElementById("homeBannerBtn");
 
@@ -321,32 +320,69 @@
       }
 
       // Search
-        const searchInput = document.getElementById("toolbarSearch");
+      const searchInput = document.getElementById("toolbarSearch");
 
-        searchInput.addEventListener("keydown", function(event){
-          if(event.key === "Enter"){
-            const query = searchInput.value.trim().toLowerCase();
-            if(!query) return;
-    
-            const pages = [
-              //{url:"/submit-a-tip", content:["tip","report","crime","submit"]},
-              //{url:"/news", content:["news","update","report","press"]},
-              //{url:"/wanted", content:["wanted","criminal","most wanted"]},
-              //{url:"/info", content:["info","investigate","what we do","cyber"]}
-            ];
+      searchInput.addEventListener("keydown", function(event){
+        if(event.key === "Enter"){
+          const query = searchInput.value.trim().toLowerCase();
+          if(!query) return;
 
-            let matchedPage = pages.find(page =>
-              page.content.some(keyword => query.includes(keyword))
-            );
+         const pages = [
+            {url:"/remasterIV", content:["info","help","nbep","commissioner"]},
+            //{url:"/submit-a-tip", content:["tip","report","crime","submit"]},
+            //{url:"/news", content:["news","update","report","press"]},
+            //{url:"/wanted", content:["wanted","criminal","most wanted"]},
+            //{url:"/info", content:["info","investigate","what we do","cyber"]}
+          ];
 
-            if(matchedPage){
-              window.location.href = matchedPage.url;
-            } else {
-              alert("Searching current page for: " + query);
-              console.log("Search query:", query);
+          const bodyText = document.body.innerText.toLowerCase();
+          if(bodyText.includes(query)){
+            const regex = new RegExp(`(${query})`, "gi");
+            const highlighted = document.body.innerHTML.replace(regex, '<mark style="background-color:#ffd900;color:#000;">$1</mark>');
+            document.body.innerHTML = highlighted;
+            console.log("Found on current page:", query);
+            return;
+          }
+
+          function scoreMatch(query, keywords){
+            let score = 0;
+            for(const keyword of keywords){
+              if(query === keyword) score += 5;
+              else if(query.includes(keyword)) score += 3;
+              else if(keyword.includes(query)) score += 2;
+              else if(fuzzyMatch(query, keyword)) score += 1;
+            }
+            return score;
+          }
+
+          function fuzzyMatch(a,b){
+            if(!a || !b) return false;
+            a = a.toLowerCase(); b = b.toLowerCase();
+            let matches = 0;
+            const minLen = Math.min(a.length,b.length);
+            for(let i=0;i<minLen;i++){
+              if(a[i]===b[i]) matches++;
+            }
+            return matches / minLen >= 0.6;
+          }
+
+          let bestPage = null;
+          let bestScore = 0;
+          for(const page of pages){
+            const s = scoreMatch(query, page.content);
+            if(s > bestScore){
+              bestScore = s;
+              bestPage = page;
             }
           }
-        });
+
+          if(bestPage && bestScore > 0){
+            window.location.href = bestPage.url;
+          } else {
+            console.log("No match found for: " + query);
+          }
+       }
+      });
     </script>
   </body>
 </html>
