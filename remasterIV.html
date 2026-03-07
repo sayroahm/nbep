@@ -260,18 +260,12 @@
       <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
     </div>
     
-    <div class="toolbar-search">
-      <div class="search-box">
-        <img src="searchicon.png" alt="search">
-        <input type="text" placeholder="Search">
-      </div>
-    </div>
-    
     <div class="toolbar">
       <div class="dropdown-logo">
         <img src="nbeplogo.png" alt="menu">
         <div class="dropdown-menu">
           <a href="#">Home</a>
+          <a href="/wanted">Most Wanted</a>
           <a href="/submit-a-tip">Report Crime</a>
           <a href="/resources">Resources</a>
           <a href="/contact-us">Contact</a>
@@ -316,7 +310,7 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.139")
+      console.log("Version: Lakewood I.140")
       console.log("Bug Report: n/a")
 
       // Button
@@ -325,6 +319,34 @@
       hbBtn.onclick = function() {
         window.location.href = "/info";
       }
+
+      // Search
+        const searchInput = document.getElementById("toolbarSearch");
+
+        searchInput.addEventListener("keydown", function(event){
+          if(event.key === "Enter"){
+            const query = searchInput.value.trim().toLowerCase();
+            if(!query) return;
+    
+            const pages = [
+              //{url:"/submit-a-tip", content:["tip","report","crime","submit"]},
+              //{url:"/news", content:["news","update","report","press"]},
+              //{url:"/wanted", content:["wanted","criminal","most wanted"]},
+              //{url:"/info", content:["info","investigate","what we do","cyber"]}
+            ];
+
+            let matchedPage = pages.find(page =>
+              page.content.some(keyword => query.includes(keyword))
+            );
+
+            if(matchedPage){
+              window.location.href = matchedPage.url;
+            } else {
+              alert("Searching current page for: " + query);
+              console.log("Search query:", query);
+            }
+          }
+        });
     </script>
   </body>
 </html>
