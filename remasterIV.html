@@ -263,6 +263,35 @@
         font-weight:bold;
         flex-shrink:0;
       }
+
+	/* NBEP Customs Context Menu */
+		.custom-context-menu {
+ 			  display: none;
+			  position: fixed;
+			  z-index: 99999;
+			  background-color: #fffef0;
+			  border: 1.5px solid #000000;
+			  min-width: 180px;
+			  font-family: Arial, sans-serif;
+			}
+
+			.custom-context-menu a {
+			  display: block;
+			  padding: 12px 15px;
+ 			  text-decoration: none;
+			  color: black;
+ 			  font-weight: 600;
+			  font-size: 15px;
+ 			  border-bottom: 1px solid #e8e6d8;
+			}
+
+			.custom-context-menu a:last-child {
+			  border-bottom: none;
+			}
+
+			.custom-context-menu a:hover {
+			  background-color: #f0eedc;
+			}
       
     </style>
   </head>
@@ -323,150 +352,178 @@
       </p>
     </div>
 
-    <script>
-			console.log("Version: Lakewood I.142.6")
-			console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).")
+<script>
+  // Version Log
+  // Change the version number for every commit made.
+  console.log("Version: Lakewood I.143");
+  console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).");
 
-			// Button
-			const hbBtn = document.getElementById("homeBannerBtn");
-			hbBtn.onclick = function() {
-						window.location.href = "/info";
-			}
+  // Button
+  const hbBtn = document.getElementById("homeBannerBtn");
+  hbBtn.onclick = function() {
+    window.location.href = "/info";
+  }
 
-			// Search
-			const searchInput = document.getElementById("toolbarSearch");
+  // Search
+  const searchInput = document.getElementById("toolbarSearch");
+  searchInput.style.borderRadius = "8px";
+  searchInput.style.paddingRight = "25px";
 
-			// Create a container for the dropdown
-			const toolbar = document.querySelector(".toolbar");
-			const dropdown = document.createElement("div");
-			dropdown.style.position = "fixed";
-			dropdown.style.top = "70px";
-			dropdown.style.right = "10px";
-			dropdown.style.width = "300px";
-			dropdown.style.background = "#fff";
-			dropdown.style.border = "1px solid #ccc";
-			dropdown.style.borderRadius = "6px";
-			dropdown.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
-			dropdown.style.display = "none";
-			dropdown.style.zIndex = "9999";
-			dropdown.style.maxHeight = "400px";
-			dropdown.style.overflowY = "auto";
-			document.body.appendChild(dropdown);
+  // Search Dropdown
+  const dropdown = document.createElement("div");
+  dropdown.style.position = "fixed";
+  dropdown.style.top = "70px";
+  dropdown.style.right = "10px";
+  dropdown.style.width = "300px";
+  dropdown.style.background = "#fff";
+  dropdown.style.border = "1px solid #ccc";
+  dropdown.style.borderRadius = "6px";
+  dropdown.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+  dropdown.style.display = "none";
+  dropdown.style.zIndex = "9999";
+  dropdown.style.maxHeight = "400px";
+  dropdown.style.overflowY = "auto";
+  document.body.appendChild(dropdown);
 
-			// Add X button
-			const clearBtn = document.createElement("span");
-			clearBtn.textContent = "✕";
-			//clearBtn.style.position = "absolute";
-			//clearBtn.style.right = "15px";
-			//clearBtn.style.top = "50%";
-			//clearBtn.style.transform = "translateY(-50%)";
-			clearBtn.style.cursor = "pointer";
-			clearBtn.style.display = "none";
-			clearBtn.style.color = "#888";
-			clearBtn.style.fontSize = "16px";
-			document.querySelector(".search-box").appendChild(clearBtn);
+  // Clear Button
+  const clearBtn = document.createElement("span");
+  clearBtn.textContent = "✕";
+  clearBtn.style.cursor = "pointer";
+  clearBtn.style.display = "none";
+  clearBtn.style.color = "#888";
+  clearBtn.style.fontSize = "16px";
+  document.querySelector(".search-box").appendChild(clearBtn);
 
-			clearBtn.addEventListener("click", () => {
-						searchInput.value = "";
-						dropdown.innerHTML = "";
-						dropdown.style.display = "none";
-						clearBtn.style.display = "none";
-			});
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    dropdown.innerHTML = "";
+    dropdown.style.display = "none";
+    clearBtn.style.display = "none";
+  });
 
-			searchInput.style.borderRadius = "8px";
-			searchInput.style.paddingRight = "25px";
+  // Page Index
+  const pages = [
+    { url: "/remasterIV",   title: "Remaster IV",         content: ["info", "help", "nbep", "commissioner"] },
+    { url: "/submit-a-tip", title: "Submit a Tip",         content: ["tip", "report", "crime", "submit"]     },
+    { url: "/news",         title: "News",                 content: ["news", "update", "report", "press"]    },
+    { url: "/wanted",       title: "Most Wanted",          content: ["wanted", "criminal", "most wanted"]    },
+    { url: "/info",         title: "What We Investigate",  content: ["info", "investigate", "what we do", "cyber"] }
+  ];
 
-			const pages = [
-						{url:"/remasterIV", title:"Remaster IV", content:["info","help","nbep","commissioner"]},
-						{url:"/submit-a-tip", title:"Submit a Tip", content:["tip","report","crime","submit"]},
-						{url:"/news", title:"News", content:["news","update","report","press"]},
-						{url:"/wanted", title:"Most Wanted", content:["wanted","criminal","most wanted"]},
-						{url:"/info", title:"What We Investigate", content:["info","investigate","what we do","cyber"]}
-			];
+  // Fuzzy Search
+  function fuzzyScore(a, b) {
+    if (!a || !b) return 0;
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    let score = 0;
+    const minLen = Math.min(a.length, b.length);
+    for (let i = 0; i < minLen; i++) {
+      if (a[i] === b[i]) score++;
+    }
+    return score / minLen;
+  }
 
-			function fuzzyScore(a,b){
-						if(!a||!b) return 0;
-						a=a.toLowerCase(); b=b.toLowerCase();
-						let score=0;
-						const minLen = Math.min(a.length,b.length);
-						for(let i=0;i<minLen;i++){
-									if(a[i]===b[i]) score++;
-						}
-						return score/minLen;
-			}
+  function searchAlgorithm(query) {
+    query = query.toLowerCase();
+    const results = [];
 
-			function searchAlgorithm(query){
-						query=query.toLowerCase();
-						const results=[];
-						const bodyText = document.body.innerText;
-						const lines = bodyText.split("\n");
-						for(let line of lines){
-									if(line.toLowerCase().includes(query)){
-												let snippet = line.trim();
-												if(snippet.length>80) snippet = snippet.slice(0,80) + "...";
-												results.push({title:"Current Page", url:window.location.href, snippet, score:5});
-									}
-						}
-						for(let page of pages){
-									let score = 0;
-									for(let keyword of page.content){
-												if(query === keyword) score += 5;
-												else if(query.includes(keyword)) score += 3;
-												else if(keyword.includes(query)) score += 2;
-												else score += fuzzyScore(query,keyword);
-									}
-									if(score>0){
-												results.push({title:page.title, url:page.url, snippet:"", score});
-									}
-						}
-						results.sort((a,b)=>b.score-a.score);
-						return results.slice(0,5);
-			}
+    const lines = document.body.innerText.split("\n");
+    for (let line of lines) {
+      if (line.toLowerCase().includes(query)) {
+        let snippet = line.trim();
+        if (snippet.length > 80) snippet = snippet.slice(0, 80) + "...";
+        results.push({ title: "Current Page", url: window.location.href, snippet, score: 5 });
+      }
+    }
 
-			function renderDropdown(results){
-						dropdown.innerHTML="";
-						if(results.length===0){
-									const div=document.createElement("div");
-									div.textContent="No results found";
-									div.style.padding="10px";
-									dropdown.appendChild(div);
-						} else {
-									for(let r of results){
-												const item=document.createElement("a");
-												item.href=r.url;
-												item.style.display="block";
-												item.style.padding="8px 10px";
-												item.style.borderBottom="1px solid #eee";
-												item.style.textDecoration="none";
-												item.style.color="#333";
+    for (let page of pages) {
+      let score = 0;
+      for (let keyword of page.content) {
+        if (query === keyword)             score += 5;
+        else if (query.includes(keyword))  score += 3;
+        else if (keyword.includes(query))  score += 2;
+        else score += fuzzyScore(query, keyword);
+      }
+      if (score > 0) results.push({ title: page.title, url: page.url, snippet: "", score });
+    }
 
-												const title=document.createElement("div");
-												title.textContent=r.title;
-												title.style.fontWeight="600";
-												const snippet=document.createElement("div");
-												snippet.textContent=r.snippet;
-												snippet.style.fontSize="12px";
-												snippet.style.color="#666";
+    results.sort((a, b) => b.score - a.score);
+    return results.slice(0, 5);
+  }
 
-												item.appendChild(title);
-												if(r.snippet) item.appendChild(snippet);
-												dropdown.appendChild(item);
-									}
-						}
-						dropdown.style.display="block";
-						clearBtn.style.display="block";
-			}
+  function renderDropdown(results) {
+    dropdown.innerHTML = "";
 
-			searchInput.addEventListener("input",()=>{
-						const query = searchInput.value.trim();
-						if(query===""){
-									dropdown.style.display="none";
-									clearBtn.style.display="none";
-						} else {
-									const results = searchAlgorithm(query);
-									renderDropdown(results);
-						}
-			});
-    </script>
+    if (results.length === 0) {
+      const div = document.createElement("div");
+      div.textContent = "No results found";
+      div.style.padding = "10px";
+      dropdown.appendChild(div);
+    } else {
+      for (let r of results) {
+        const item = document.createElement("a");
+        item.href = r.url;
+        item.style.display = "block";
+        item.style.padding = "8px 10px";
+        item.style.borderBottom = "1px solid #eee";
+        item.style.textDecoration = "none";
+        item.style.color = "#333";
+
+        const title = document.createElement("div");
+        title.textContent = r.title;
+        title.style.fontWeight = "600";
+
+        const snippet = document.createElement("div");
+        snippet.textContent = r.snippet;
+        snippet.style.fontSize = "12px";
+        snippet.style.color = "#666";
+
+        item.appendChild(title);
+        if (r.snippet) item.appendChild(snippet);
+        dropdown.appendChild(item);
+      }
+    }
+
+    dropdown.style.display = "block";
+    clearBtn.style.display = "block";
+  }
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim();
+    if (query === "") {
+      dropdown.style.display = "none";
+      clearBtn.style.display = "none";
+    } else {
+      renderDropdown(searchAlgorithm(query));
+    }
+  });
+
+  // Context Menu
+  const contextMenu = document.createElement("div");
+  contextMenu.classList.add("custom-context-menu");
+  contextMenu.innerHTML = `
+    <a href="/resources">Resources</a>
+    <a href="/help">Help</a>
+    <a href="/admin-login">Admin Login</a>
+    <a href="/info">What We Investigate</a>
+  `;
+  document.body.appendChild(contextMenu);
+
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    contextMenu.style.display = "block";
+
+    const menuWidth  = contextMenu.offsetWidth;
+    const menuHeight = contextMenu.offsetHeight;
+    const winWidth   = window.innerWidth;
+    const winHeight  = window.innerHeight;
+
+    contextMenu.style.left = (e.clientX + menuWidth  > winWidth)  ? (winWidth  - menuWidth  - 5) + "px" : e.clientX + "px";
+    contextMenu.style.top  = (e.clientY + menuHeight > winHeight) ? (winHeight - menuHeight - 5) + "px" : e.clientY + "px";
+  });
+
+  document.addEventListener("click",  () => { contextMenu.style.display = "none"; });
+  document.addEventListener("scroll", () => { contextMenu.style.display = "none"; });
+</script>
   </body>
 </html>
