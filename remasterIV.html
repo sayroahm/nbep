@@ -107,11 +107,14 @@
         font-size:22px;
         letter-spacing:2px;
         text-transform:uppercase;
+        border-bottom:2px solid transparent;
+        padding-bottom:4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
       }
 
       .toolbar-nav a:hover{
-        border-bottom:2px solid white;
-        padding-bottom:4px;
+        color:#ffd900;
+        border-bottom:2px solid #ffd900;
       }
       
       /* NBEP Home Banner */
@@ -190,8 +193,8 @@
 
         <div class="toolbar-nav">
           <a href="#">Home</a>
-          <a href="#">Most Wanted</a>
-          <a href="#">News</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/news">News</a>
           <a href="#">What We Do</a>
         </div>
 
