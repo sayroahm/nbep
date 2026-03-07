@@ -6,11 +6,22 @@
       NBEP.us | NATIONAL BUREAU OF EXPLOITATION PROTECTION
     </title>
     <style>
-      body{
-        margin:0px;
-        background-color:#dbd9d3;
-        font-family: Arial;
-      }
+	html {
+	  overflow-x: hidden;
+	  max-width: 100%;
+	}
+
+	body{
+	  margin:0px;
+	  background-color:#dbd9d3;
+	  font-family: Arial;
+	  overflow-x: hidden;
+	  max-width: 100%;
+	}
+
+	* {
+ 	 box-sizing: border-box;
+	}
 
       .banner{
         width:100%;
@@ -313,7 +324,7 @@
     </div>
 
     <script>
-			console.log("Version: Lakewood I.142.5")
+			console.log("Version: Lakewood I.142.6")
 			console.log("Bug Report: Document elements fixed positions bugged, fixed (hopefully).")
 
 			// Button
@@ -345,15 +356,15 @@
 			// Add X button
 			const clearBtn = document.createElement("span");
 			clearBtn.textContent = "✕";
-			clearBtn.style.position = "absolute";
-			clearBtn.style.right = "15px";
-			clearBtn.style.top = "50%";
-			clearBtn.style.transform = "translateY(-50%)";
+			//clearBtn.style.position = "absolute";
+			//clearBtn.style.right = "15px";
+			//clearBtn.style.top = "50%";
+			//clearBtn.style.transform = "translateY(-50%)";
 			clearBtn.style.cursor = "pointer";
 			clearBtn.style.display = "none";
 			clearBtn.style.color = "#888";
 			clearBtn.style.fontSize = "16px";
-			document.body.appendChild(clearBtn);
+			document.querySelector(".search-box").appendChild(clearBtn);
 
 			clearBtn.addEventListener("click", () => {
 						searchInput.value = "";
