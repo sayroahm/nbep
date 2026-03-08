@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <script src="algorithm.js"></script>
     <link rel="icon" type="image/x-icon" href="nbeplogo.png">
     <title>NBEP-us.com | NATIONAL BUREAU OF EXPLOITATION PROTECTION</title>
     <style>
@@ -497,6 +498,80 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.3),
           0 1px 2px rgba(0, 0, 0, 0.3);
       }
+
+      .footer{
+        margin-top:auto;
+        background:black;
+        color:white;
+        width:100%;
+        padding:20px 0;
+        font-family:Arial, sans-serif;
+      }
+
+      .footer-inner{
+        width:95%;
+        margin:auto;
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+      }
+
+      .footer-links{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .footer-row{
+        display:flex;
+        gap:18px;
+        padding:10px 0;
+        border-bottom:1px solid #333;
+      }
+
+      .footer-row:last-child{
+        border-bottom:none;
+      }
+
+      .footer-btn{
+        text-decoration:none;
+        color:white;
+        font-size:13px;
+        letter-spacing:.5px;
+        padding:2px 4px;
+        transition:color .25s ease;
+      }
+
+      .footer-btn:hover{
+        color:#ffd900;
+      }
+
+      .footer-social{
+        margin-top:12px;
+        display:flex;
+        gap:10px;
+      }
+
+      .footer-social img{
+        height:18px;
+        width:18px;
+      }
+
+      .footer-logo{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .footer-logo-img{
+        height:110px;
+        width:auto;
+      }
+      
+      .footer-text{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:20px;
+        color:white;
+      }
     </style>
   </head>
   <body>
@@ -585,145 +660,63 @@
       </div>
     </div>
 
-    <script>
-      console.log("Version: Lakewood I.153");
-      console.log("Bug Report: Removed bugged gallery, added window opens to the Help context menu.");
+    <!-- footer -->
+
+<div class="footer">
+
+<div class="footer-inner">
+
+<div class="footer-links">
+
+<div class="footer-row">
+<a class="footer-btn"><span>HOME</span></a>
+<a class="footer-btn"><span>MOST WANTED</span></a>
+<a class="footer-btn"><span>NEWS</span></a>
+<a class="footer-btn"><span>WHAT WE INVESTIGATE</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>CONTACT US</span></a>
+<a class="footer-btn"><span>OFFICES</span></a>
+<a class="footer-btn"><span>SOFTWARE</span></a>
+<a class="footer-btn"><span>DOCUMENTS</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>ARCHIVES</span></a>
+<a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+<a class="footer-btn"><span>HELP</span></a>
+<a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+</div>
+
+<div class="footer-social">
+<img src="youtube.png">
+<img src="facebook.png">
+<img src="atlassian.png">
+<img src="x.png">
+</div>
+<div class="footer-text">
+@nationalbep - Facebook, Atlassian, X  ::  @NBEP-Official - Youtube
+</div>
+
+</div>
+
+<div class="footer-logo">
+  <img src="nbeplogo.png" class="footer-logo-img">
+  <img src="nbep-text.png" class="footer-logo-img">
+</div>
+
+</div>
+</div>
+
+  <script>
+      console.log("Version: Lakewood I.155");
+      //console.log("Bug Report:");
 
       const hbBtn = document.getElementById("homeBannerBtn");
       hbBtn.onclick = function() {
         window.location.href = "/info";
       }
-
-      const searchInput = document.getElementById("toolbarSearch");
-      searchInput.style.borderRadius = "8px";
-      searchInput.style.paddingRight = "25px";
-
-      const dropdown = document.createElement("div");
-      dropdown.style.position = "fixed";
-      dropdown.style.top = "70px";
-      dropdown.style.right = "10px";
-      dropdown.style.width = "300px";
-      dropdown.style.background = "#fff";
-      dropdown.style.border = "1px solid #ccc";
-      dropdown.style.borderRadius = "6px";
-      dropdown.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
-      dropdown.style.display = "none";
-      dropdown.style.zIndex = "9999";
-      dropdown.style.maxHeight = "400px";
-      dropdown.style.overflowY = "auto";
-      document.body.appendChild(dropdown);
-
-      const clearBtn = document.createElement("span");
-      clearBtn.textContent = "✕";
-      clearBtn.style.cursor = "pointer";
-      clearBtn.style.display = "none";
-      clearBtn.style.color = "#888";
-      clearBtn.style.fontSize = "16px";
-      document.querySelector(".search-box").appendChild(clearBtn);
-
-      clearBtn.addEventListener("click", () => {
-        searchInput.value = "";
-        dropdown.innerHTML = "";
-        dropdown.style.display = "none";
-        clearBtn.style.display = "none";
-      });
-
-      const pages = [
-        { url: "/",             title: "Home",                content: ["info", "help", "nbep", "commissioner"]                    },
-        { url: "/submit-a-tip", title: "Submit a Tip",        content: ["tip", "report", "crime", "submit"]                        },
-        { url: "/news",         title: "News",                content: ["news", "update", "report", "press"]                       },
-        { url: "/wanted",       title: "Most Wanted",         content: ["wanted", "criminal", "most wanted"]                       },
-        { url: "/info",         title: "What We Investigate", content: ["info", "investigate", "what we do", "cyber"]              },
-        { url: "/404",          title: "Page not found",      content: ["404", "page not found", "return home", "not live"]        },
-        { url: "/resources",    title: "Resources",           content: ["consult", "help", "cope", "software", "988", "resources"] }
-      ];
-
-      function fuzzyScore(a, b) {
-        if (!a || !b) return 0;
-        a = a.toLowerCase();
-        b = b.toLowerCase();
-        let score = 0;
-        const minLen = Math.min(a.length, b.length);
-        for (let i = 0; i < minLen; i++) {
-          if (a[i] === b[i]) score++;
-        }
-        return score / minLen;
-      }
-
-      function searchAlgorithm(query) {
-        query = query.toLowerCase();
-        const results = [];
-
-        const lines = document.body.innerText.split("\n");
-        for (let line of lines) {
-          if (line.toLowerCase().includes(query)) {
-            let snippet = line.trim();
-            if (snippet.length > 80) snippet = snippet.slice(0, 80) + "...";
-            results.push({ title: "Current Page", url: window.location.href, snippet, score: 5 });
-          }
-        }
-
-        for (let page of pages) {
-          let score = 0;
-          for (let keyword of page.content) {
-            if (query === keyword)            score += 5;
-            else if (query.includes(keyword)) score += 3;
-            else if (keyword.includes(query)) score += 2;
-            else score += fuzzyScore(query, keyword);
-          }
-          if (score > 0) results.push({ title: page.title, url: page.url, snippet: "", score });
-        }
-
-        results.sort((a, b) => b.score - a.score);
-        return results.slice(0, 5);
-      }
-
-      function renderDropdown(results) {
-        dropdown.innerHTML = "";
-
-        if (results.length === 0) {
-          const div = document.createElement("div");
-          div.textContent = "No results found";
-          div.style.padding = "10px";
-          dropdown.appendChild(div);
-        } else {
-          for (let r of results) {
-            const item = document.createElement("a");
-            item.href = r.url;
-            item.style.display = "block";
-            item.style.padding = "8px 10px";
-            item.style.borderBottom = "1px solid #eee";
-            item.style.textDecoration = "none";
-            item.style.color = "#333";
-
-            const title = document.createElement("div");
-            title.textContent = r.title;
-            title.style.fontWeight = "600";
-
-            const snippet = document.createElement("div");
-            snippet.textContent = r.snippet;
-            snippet.style.fontSize = "12px";
-            snippet.style.color = "#666";
-
-            item.appendChild(title);
-            if (r.snippet) item.appendChild(snippet);
-            dropdown.appendChild(item);
-          }
-        }
-
-        dropdown.style.display = "block";
-        clearBtn.style.display = "block";
-      }
-
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim();
-        if (query === "") {
-          dropdown.style.display = "none";
-          clearBtn.style.display = "none";
-        } else {
-          renderDropdown(searchAlgorithm(query));
-        }
-      });
 
       const contextMenu = document.createElement("div");
       contextMenu.classList.add("custom-context-menu");
