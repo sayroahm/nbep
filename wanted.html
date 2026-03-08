@@ -453,6 +453,9 @@
         <div class="modal-aad-banner" id="modalAadBanner">
           SHOULD BE CONSIDERED ARMED AND DANGEROUS
         </div>
+        <!--<div class="modal-fi-banner" id="modalFiBanner">
+          FBI INVESTIGATION
+        </div>-->
         <div class="modal-header">
           <span class="modal-header-label">NBEP &nbsp;&#9632;&nbsp; Most Wanted &nbsp;&#9632;&nbsp; Fugitive Profile</span>
           <button class="modal-close" id="modalClose">&#x2715;</button>
@@ -520,7 +523,9 @@
         </div>
       </div>
     </div>
-
+    <script>
+      console.log("Version: Lakewood I.124");
+    </script>
     <!-- firebase -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
@@ -550,6 +555,7 @@
       const modalAadBadge  = document.getElementById("modalAadBadge");
       const modalPhotoCol  = document.getElementById("modalPhotoCol");
       const modalClose     = document.getElementById("modalClose");
+     // const modalFbi       = document.getElementById("modalFiBanner");
 
       function openModal(fugitive) {
         modalName.textContent    = fugitive.name || "Unknown";
@@ -564,6 +570,16 @@
           modalAadBadge.textContent = "No Armed & Dangerous Warning";
           modalAadBadge.className   = "modal-status-badge badge-safe";
         }
+
+       // if (fugitive["fbi-investigation"]) {
+     //     modalFiBanner.classList.add("show");
+    //      modalFiBanner.textContent = "FBI Investigation";
+    //      modalFiBanner.className   = "modal-fi-badge badge-fi";
+    //    } else {
+     //     modalFiBanner.classList.remove("show");
+     //     modalFiBanner.textContent = "No FBI Investigation";
+     //     modalFiBanner.className   = "modal-fi-badge badge-fi";
+     //   }
 
         if (fugitive.photo) {
           modalPhotoCol.innerHTML = `<img src="${fugitive.photo}" alt="${fugitive.name || "Fugitive"}" onerror="this.src='HDNoPfp.png'">`;
