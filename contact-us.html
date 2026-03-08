@@ -3,6 +3,7 @@
   <head>
     <script src="algorithm.js"></script>
     <script src="console.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="icon" type="image/x-icon" href="nbeplogo.png">
     <title>NBEP-us.com | Contact Us</title>
     <style>
@@ -547,6 +548,10 @@
             <textarea id="message" placeholder="Type your message here..."></textarea>
           </div>
 
+          <div class="form-group">
+            <div class="g-recaptcha" data-sitekey="6LelCIQsAAAAAMfs_RiHl2VW8lptn8JM5JwADcC0" data-theme="light"></div>
+          </div>
+
           <button class="form-submit-btn" id="submitBtn">Submit Message</button>
 
           <div class="form-success" id="formSuccess">
@@ -718,6 +723,13 @@
           return;
         }
 
+        // reCAPTCHA check
+        const captchaResponse = grecaptcha.getResponse();
+        if (!captchaResponse) {
+          alert("Please complete the reCAPTCHA verification before submitting.");
+          return;
+        }
+
         // Lock button & show loading state
         const btn = document.getElementById("submitBtn");
         btn.disabled    = true;
@@ -750,6 +762,7 @@
           btn.textContent = "Submit Message";
           btn.style.opacity = "1";
           btn.style.cursor  = "pointer";
+          grecaptcha.reset();
           alert("There was an error submitting your message. Please try again.");
         }
       });
