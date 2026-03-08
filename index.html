@@ -8,7 +8,7 @@
     <title>NBEP-us.com | Most Wanted</title>
     <style>
 
-      /* ── reset & base ── */
+      /*  reset & base  */
       *, *::before, *::after { box-sizing: border-box; }
       html { overflow-x: hidden; max-width: 100%; }
       body {
@@ -23,7 +23,7 @@
         color: #1a1a1a;
       }
 
-      /* ── top official banner ── */
+      /*  top official banner  */
       .banner {
         width: 100%;
         display: flex;
@@ -36,7 +36,7 @@
       .banner p { margin: 4px; font-weight: 500; font-size: 13px; }
       .banner .p2 { margin-left: 7px; font-weight: 700; text-decoration: underline; color: #000; }
 
-      /* ── toolbar ── */
+      /*  toolbar  */
       .toolbar {
         background-color: #000;
         height: 70px;
@@ -89,7 +89,7 @@
         width: 185px; font-family: "Source Sans 3", Arial, sans-serif;
       }
 
-      /* ── page heading ── */
+      /*  page heading  */
       .page-heading {
         background: white;
         border-bottom: 3px solid #ffd900;
@@ -110,7 +110,7 @@
         text-transform: uppercase;
       }
 
-      /* ── main content wrapper ── */
+      /*  main content wrapper  */
       .page-body {
         flex: 1;
         padding: 30px 40px 60px;
@@ -119,7 +119,7 @@
         width: 100%;
       }
 
-      /* ── loading / error states ── */
+      /*  loading / error states  */
       .state-msg {
         text-align: center;
         padding: 60px 20px;
@@ -129,7 +129,7 @@
       }
       .state-msg.error { color: #993333; }
 
-      /* ── wanted grid ── */
+      /*  wanted grid  */
       .wanted-grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
@@ -140,7 +140,7 @@
       @media (max-width: 620px)  { .wanted-grid { grid-template-columns: repeat(2, 1fr); } }
       @media (max-width: 380px)  { .wanted-grid { grid-template-columns: 1fr; } }
 
-      /* ── individual card ── */
+      /*  individual card  */
       .wanted-card {
         background: white;
         border: 1px solid #ddd;
@@ -150,7 +150,7 @@
       }
       .wanted-card:hover { border-color: #ffd900; }
 
-      /* ── aad stripe ── */
+      /*  aad stripe  */
       .aad-stripe {
         background: #ffd900;
         color: #111;
@@ -162,7 +162,7 @@
         padding: 5px 6px;
       }
 
-      /* ── photo ── */
+      /*  photo  */
       .card-photo-wrap {
         width: 100%;
         aspect-ratio: 3 / 4;
@@ -176,7 +176,7 @@
         display: block;
       }
 
-      /* ── card info ── */
+      /*  card info  */
       .card-info {
         padding: 10px 10px 12px;
         border-top: 2px solid #f0f0f0;
@@ -209,7 +209,7 @@
         text-transform: uppercase;
       }
 
-      /* ── modal overlay ── */
+      /*  modal overlay  */
       .modal-overlay {
         display: none;
         position: fixed;
@@ -222,7 +222,7 @@
       }
       .modal-overlay.open { display: flex; }
 
-      /* ── modal window ── */
+      /*  modal window  */
       .modal-window {
         background: white;
         border: 1px solid #ccc;
@@ -234,7 +234,7 @@
         box-shadow: 0 8px 40px rgba(0,0,0,0.25);
       }
 
-      /* ── modal aad banner ── */
+      /*  modal aad banner  */
       .modal-aad-banner {
         display: none;
         background: #ffd900;
@@ -248,7 +248,7 @@
       }
       .modal-aad-banner.show { display: block; }
 
-      /* ── modal header ── */
+      /*  modal header  */
       .modal-header {
         background: #f9f9f6;
         border-bottom: 2px solid #eee;
@@ -276,7 +276,7 @@
       }
       .modal-close:hover { background: #ffd900; color: #111; border-color: #ffd900; }
 
-      /* ── modal body ── */
+      /*  modal body  */
       .modal-body { display: flex; }
       .modal-photo-col {
         width: 240px;
@@ -346,7 +346,7 @@
         .modal-photo-col { width: 100%; min-width: unset; }
       }
 
-      /* ── custom context menu ── */
+      /*  custom context menu  */
       .custom-context-menu {
         display: none;
         position: fixed;
@@ -365,7 +365,7 @@
       .custom-context-menu a:last-child { border-bottom: none; }
       .custom-context-menu a:hover { background-color: #fff8cc; }
 
-      /* ── footer ── */
+      /*  footer  */
       .footer {
         margin-top: auto;
         background: black;
