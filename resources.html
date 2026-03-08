@@ -561,6 +561,136 @@
         text-align: center;
         letter-spacing: 0.3px;
       }
+
+
+      .footer {
+        width: 100%;
+        background: black;
+        color: white;
+        font-family: sans-serif;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .footer-inner {
+        width: 95%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .footer-row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .footer-btn {
+        position: relative;
+        padding: 8px 16px;
+        border: 1px solid white;
+        color: white;
+        text-decoration: none;
+        overflow: hidden;
+        transition: color .35s ease;
+      }
+
+      .footer-btn::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        background: yellow;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: width .4s ease, height .4s ease;
+        z-index: 0;
+      }
+
+      .footer-btn:hover::before {
+        width: 220%;
+        height: 500%;
+      }
+
+      .footer-btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-btn:hover {
+        color: black;
+      }
+
+      .footer-social {
+        margin-top: 15px;
+        display: flex;
+        gap: 12px;
+      }
+
+      .footer-social img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo-img {
+    height: 90px;
+}
+
+.footer-logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-line1 {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.footer-logo-main {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.footer-logo-sub1 {
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.footer-logo-sub2 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-left: 4px;
+}
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .footer-logo-img {
+         height: 90px;
+      }
+
+      .footer-logo-text {
+        text-align: left;
+      }
+      
     </style>
   </head>
   <body>
@@ -689,8 +819,57 @@
       </div>
     </div>
 
+    <!-- footer -->
+
+<div class="footer">
+
+<div class="footer-inner">
+
+<div class="footer-links">
+
+<div class="footer-row">
+<a class="footer-btn"><span>HOME</span></a>
+<a class="footer-btn"><span>MOST WANTED</span></a>
+<a class="footer-btn"><span>NEWS</span></a>
+<a class="footer-btn"><span>WHAT WE INVESTIGATE</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>CONTACT US</span></a>
+<a class="footer-btn"><span>OFFICES</span></a>
+<a class="footer-btn"><span>SOFTWARE</span></a>
+<a class="footer-btn"><span>DOCUMENTS</span></a>
+</div>
+
+<div class="footer-row">
+<a class="footer-btn"><span>ARCHIVES</span></a>
+<a class="footer-btn"><span>DIRECTORS ROSTER</span></a>
+<a class="footer-btn"><span>HELP</span></a>
+<a class="footer-btn"><span>ADMINISTRATIVE SERVICES</span></a>
+</div>
+
+<div class="footer-social">
+<img src="youtube.png">
+<img src="facebook.png">
+<img src="atlassian.png">
+<img src="x.png">
+</div>
+
+</div>
+
+<div class="footer-logo">
+<img src="nbeplogo.png" class="footer-logo-img">
+<div class="footer-logo-text">
+<div class="footer-logo-line1">
+<span class="footer-logo-main">NBEP</span>
+<span class="footer-logo-sub1">NATIONAL BUREAU OF</span>
+</div>
+<div class="footer-logo-sub2">EXPLOITATION PROTECTION</div>
+</div>
+</div>
+
     <script>
-      console.log("Version: Lakewood I.120");
+      console.log("Version: Lakewood I.121");
       console.log("Bug Report:");
 
       const vistaHelp      = document.getElementById("vistaHelp");
