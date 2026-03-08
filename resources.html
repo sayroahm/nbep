@@ -15,6 +15,9 @@
         font-family: Arial;
         overflow-x: hidden;
         max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
       * {
@@ -562,133 +565,82 @@
         letter-spacing: 0.3px;
       }
 
-
-      .footer {
-        width: 100%;
-        background: black;
-        color: white;
-        font-family: sans-serif;
-        padding-top: 20px;
-        padding-bottom: 20px;
+      .footer{
+        margin-top:auto;
+        background:black;
+        color:white;
+        width:100%;
+        padding:20px 0;
+        font-family:Arial, sans-serif;
       }
 
-      .footer-inner {
-        width: 95%;
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+      .footer-inner{
+        width:95%;
+        margin:auto;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
       }
 
-      .footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+      .footer-brand{
+        display:flex;
+        align-items:center;
+        gap:14px;
       }
 
-      .footer-row {
-        display: flex;
-        gap: 15px;
+      .footer-brand img{
+        height:42px;
       }
 
-      .footer-btn {
-        position: relative;
-        padding: 8px 16px;
-        border: 1px solid white;
-        color: white;
-        text-decoration: none;
-        overflow: hidden;
-        transition: color .35s ease;
+      .footer-brand-text{
+        display:flex;
+        flex-direction:column;
+        line-height:1.1;
       }
 
-      .footer-btn::before {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        background: yellow;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: width .4s ease, height .4s ease;
-        z-index: 0;
+      .footer-brand-main{
+        font-size:36px;
+        font-weight:800;
+        letter-spacing:2px;
       }
 
-      .footer-btn:hover::before {
-        width: 220%;
-        height: 500%;
+      .footer-brand-sub{
+        font-size:13px;
+        letter-spacing:1.5px;
+      }
+      
+      .footer-links{
+        display:flex;
+        flex-direction:column;
+        gap:8px;
       }
 
-      .footer-btn span {
-        position: relative;
-        z-index: 1;
+      .footer-row{
+        display:flex;
+        gap:18px;
       }
 
-      .footer-btn:hover {
-        color: black;
+      .footer-btn{
+        text-decoration:none;
+        color:white;
+        font-size:13px;
+        letter-spacing:.5px;
+        padding:2px 4px;
       }
 
-      .footer-social {
-        margin-top: 15px;
-        display: flex;
-        gap: 12px;
+      .footer-btn:hover{
+        text-decoration:underline;
       }
 
-      .footer-social img {
-        width: 20px;
-        height: 20px;
+      .footer-social{
+        margin-top:10px;
+        display:flex;
+        gap:10px;
       }
 
-      .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.footer-logo-img {
-    height: 90px;
-}
-
-.footer-logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-logo-line1 {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-}
-
-.footer-logo-main {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.footer-logo-sub1 {
-    font-size: 16px;
-    letter-spacing: 2px;
-}
-
-.footer-logo-sub2 {
-    font-size: 16px;
-    letter-spacing: 2px;
-    margin-left: 4px;
-}
-      .footer-logo {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .footer-logo-img {
-         height: 90px;
-      }
-
-      .footer-logo-text {
-        text-align: left;
+      .footer-social img{
+        height:18px;
+        width:18px;
       }
       
     </style>
@@ -869,7 +821,7 @@
 </div>
 
     <script>
-      console.log("Version: Lakewood I.121");
+      console.log("Version: Lakewood I.122");
       console.log("Bug Report:");
 
       const vistaHelp      = document.getElementById("vistaHelp");
