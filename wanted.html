@@ -1,0 +1,720 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="nbeplogo.png">
+    <title>NBEP-us.com | Most Wanted</title>
+    <style>
+
+      /*  reset & base  */
+      *, *::before, *::after { box-sizing: border-box; }
+      html { overflow-x: hidden; max-width: 100%; }
+      body {
+        margin: 0;
+        background-color: #1a1a1a;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /*  top official banner  */
+      .banner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+      .banner img { margin-left: 8px; margin-right: 4px; height: 1.36em; width: auto; }
+      .banner .img2 { margin-left: 4px; margin-right: 4px; height: 1em; width: 25px; }
+      .banner p { margin: 4px; font-weight: 500; font-size: 13px; }
+      .banner .p2 { margin-left: 7px; font-weight: 700; text-decoration: underline; color: #000; }
+
+      /*  toolbar  */
+      .toolbar {
+        background-color: #000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+        position: relative;
+        width: 100%;
+      }
+      .dropdown-logo { position: relative; }
+      .dropdown-logo img {
+        height: 48px; width: auto;
+        border: 2px solid white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0;
+        background-color: white;
+        min-width: 200px;
+        border: 2px solid black;
+        z-index: 100;
+      }
+      .dropdown-menu a {
+        display: block; padding: 12px 15px;
+        text-decoration: none; color: black; font-weight: 600;
+      }
+      .dropdown-menu a:hover { background-color: #eee; }
+      .dropdown-logo:hover .dropdown-menu { display: block; }
+      .toolbar-nav { display: flex; gap: 60px; margin-left: 60px; }
+      .toolbar-nav a {
+        color: white; text-decoration: none; font-weight: 700;
+        font-size: 22px; letter-spacing: 2px; text-transform: uppercase;
+        border-bottom: 2px solid transparent; padding-bottom: 4px;
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .toolbar-nav a:hover { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-nav a.active { color: #ffd900; border-bottom: 2px solid #ffd900; }
+      .toolbar-search { margin-left: auto; margin-right: 10px; }
+      .search-box {
+        display: flex; align-items: center;
+        background: white; border-radius: 20px;
+        padding: 6px 12px; border: 1px solid #ccc;
+        transition: box-shadow 0.2s ease;
+      }
+      .search-box:focus-within { box-shadow: 0 0 0 2px #ffd900; }
+      .search-box img { width: 16px; height: 16px; margin-right: 8px; opacity: 0.7; }
+      .search-box input {
+        border: none; outline: none; font-size: 14px;
+        width: 185px; font-family: Arial, sans-serif;
+      }
+
+      /*  page hero banner  */
+      .page-hero {
+        background: linear-gradient(180deg, #0d0d0d 0%, #1a0000 100%);
+        border-bottom: 4px solid #cc0000;
+        padding: 36px 40px 28px;
+        text-align: center;
+      }
+      .page-hero h1 {
+        font-family: "Georgia", serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin: 0 0 8px 0;
+      }
+      .page-hero .hero-sub {
+        font-size: 0.95rem;
+        color: #aaa;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      .page-hero .hero-rule {
+        width: 80px; height: 3px;
+        background: #cc0000;
+        margin: 14px auto 0;
+        border: none;
+      }
+
+      /*  main content wrapper  */
+      .page-body {
+        flex: 1;
+        padding: 40px 30px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      /*  loading / error states  */
+      .state-msg {
+        text-align: center;
+        padding: 60px 20px;
+        color: #888;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+      }
+      .state-msg.error { color: #cc4444; }
+
+      /*  wanted grid  */
+      .wanted-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 1200px) { .wanted-grid { grid-template-columns: repeat(4, 1fr); } }
+      @media (max-width: 900px)  { .wanted-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 620px)  { .wanted-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 400px)  { .wanted-grid { grid-template-columns: 1fr; } }
+
+      /*  individual wanted card  */
+      .wanted-card {
+        background: #111;
+        border: 1px solid #2a2a2a;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .wanted-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(204, 0, 0, 0.25);
+        border-color: #cc0000;
+      }
+
+      /*  aad top stripe  */
+      .aad-stripe {
+        background: #cc0000;
+        color: white;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px 8px;
+        line-height: 1.3;
+      }
+
+      /*  photo area  */
+      .card-photo-wrap {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        background: #1e1e1e;
+        overflow: hidden;
+        position: relative;
+      }
+      .card-photo-wrap img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+        filter: grayscale(15%);
+        transition: filter 0.2s ease;
+      }
+      .wanted-card:hover .card-photo-wrap img { filter: grayscale(0%); }
+
+      /*  photo placeholder  */
+      .photo-placeholder {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        background: #1e1e1e; color: #444;
+        font-size: 3rem;
+      }
+
+      /*  card bottom info  */
+      .card-info {
+        padding: 10px 12px 12px;
+        border-top: 2px solid #1f1f1f;
+      }
+      .card-name {
+        font-family: "Georgia", serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #f0f0f0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        line-height: 1.25;
+      }
+      .card-caution {
+        font-size: 0.72rem;
+        color: #888;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .card-view-btn {
+        margin-top: 10px;
+        font-size: 0.7rem;
+        color: #cc0000;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+
+      /*  modal overlay  */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.82);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        backdrop-filter: blur(3px);
+      }
+      .modal-overlay.open { display: flex; }
+
+      /*  modal window  */
+      .modal-window {
+        background: #111;
+        border: 1px solid #2a2a2a;
+        width: 100%;
+        max-width: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px #cc000033;
+        animation: modalIn 0.2s ease;
+      }
+      @keyframes modalIn {
+        from { opacity: 0; transform: scale(0.96) translateY(12px); }
+        to   { opacity: 1; transform: scale(1)    translateY(0); }
+      }
+
+      /*  modal aad banner  */
+      .modal-aad-banner {
+        display: none;
+        background: #cc0000;
+        color: white;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        padding: 10px;
+        text-transform: uppercase;
+      }
+      .modal-aad-banner.show { display: block; }
+
+      /*  modal header  */
+      .modal-header {
+        background: #0d0d0d;
+        border-bottom: 2px solid #1e1e1e;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .modal-header-label {
+        font-size: 0.7rem;
+        color: #666;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .modal-close {
+        background: none;
+        border: 1px solid #444;
+        color: #aaa;
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.15s, color 0.15s;
+        flex-shrink: 0;
+      }
+      .modal-close:hover { background: #cc0000; color: white; border-color: #cc0000; }
+
+      /*  modal body  */
+      .modal-body {
+        display: flex;
+        gap: 0;
+      }
+      .modal-photo-col {
+        width: 260px;
+        min-width: 260px;
+        background: #1a1a1a;
+      }
+      .modal-photo-col img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: top center;
+      }
+      .modal-photo-col .photo-placeholder {
+        height: 340px;
+        font-size: 5rem;
+      }
+      .modal-info-col {
+        flex: 1;
+        padding: 24px 22px;
+        border-left: 1px solid #1e1e1e;
+      }
+      .modal-name {
+        font-family: "Georgia", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0 0 6px 0;
+        line-height: 1.2;
+      }
+      .modal-section-label {
+        font-size: 0.65rem;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #cc0000;
+        font-weight: 700;
+        margin: 20px 0 6px 0;
+        border-bottom: 1px solid #2a2a2a;
+        padding-bottom: 4px;
+      }
+      .modal-caution-text {
+        font-size: 0.88rem;
+        color: #ccc;
+        line-height: 1.65;
+        margin: 0;
+      }
+      .modal-status-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+      }
+      .modal-status-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 2px;
+      }
+      .badge-aad { background: #cc0000; color: white; }
+      .badge-safe { background: #1e3a1e; color: #66cc66; }
+      .modal-footer-bar {
+        background: #0d0d0d;
+        border-top: 1px solid #1e1e1e;
+        padding: 10px 18px;
+        font-size: 0.65rem;
+        color: #444;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      @media (max-width: 600px) {
+        .modal-body { flex-direction: column; }
+        .modal-photo-col { width: 100%; min-width: unset; }
+      }
+
+      /*  custom context menu  */
+      .custom-context-menu {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        background-color: #fffef0;
+        border: 1.5px solid #000;
+        min-width: 180px;
+        font-family: Arial, sans-serif;
+      }
+      .custom-context-menu a {
+        display: block; padding: 12px 15px;
+        text-decoration: none; color: black;
+        font-weight: 600; font-size: 15px;
+        border-bottom: 1px solid #e8e6d8;
+      }
+      .custom-context-menu a:last-child { border-bottom: none; }
+      .custom-context-menu a:hover { background-color: #f0eedc; }
+
+      /*  footer  */
+      .footer {
+        margin-top: auto;
+        background: black;
+        color: white;
+        width: 100%;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+      }
+      .footer-inner {
+        width: 95%; margin: auto;
+        display: flex; justify-content: space-between; align-items: flex-start;
+      }
+      .footer-links { display: flex; flex-direction: column; }
+      .footer-row {
+        display: flex; gap: 18px;
+        padding: 10px 0;
+        border-bottom: 1px solid #333;
+      }
+      .footer-row:last-child { border-bottom: none; }
+      .footer-btn {
+        text-decoration: none; color: white;
+        font-size: 13px; letter-spacing: .5px;
+        padding: 2px 4px; transition: color .25s ease;
+      }
+      .footer-btn:hover { color: #ffd900; }
+      .footer-social { margin-top: 12px; display: flex; gap: 10px; }
+      .footer-social img { height: 18px; width: 18px; }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-img { height: 110px; width: auto; }
+      .footer-text { font-size: 15px; color: white; }
+      .footer-text p { margin: 4px 0; }
+
+    </style>
+  </head>
+  <body>
+
+    <!-- top official banner -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
+      <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
+    </div>
+
+    <!-- toolbar -->
+    <div class="toolbar">
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="/">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
+          <a href="/contact-us">Contact</a>
+        </div>
+      </div>
+      <div class="toolbar-nav">
+        <a href="/">Home</a>
+        <a href="/wanted" class="active">Most Wanted</a>
+        <a href="/news">News</a>
+        <a href="/info">What We Investigate</a>
+      </div>
+      <div class="toolbar-search">
+        <div class="search-box">
+          <img src="searchicon.png" alt="search">
+          <input type="text" placeholder="Search" id="toolbarSearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- page hero -->
+    <div class="page-hero">
+      <h1>Most Wanted</h1>
+      <p class="hero-sub">NBEP &nbsp;&#9632;&nbsp; Active Fugitive Registry &nbsp;&#9632;&nbsp; Public Records</p>
+      <hr class="hero-rule">
+    </div>
+
+    <!-- main content -->
+    <div class="page-body">
+      <div id="stateMsg" class="state-msg">Loading fugitive records...</div>
+      <div id="wantedGrid" class="wanted-grid" style="display:none;"></div>
+    </div>
+
+    <!-- modal overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-window" id="modalWindow">
+        <div class="modal-aad-banner" id="modalAadBanner">
+          &#9888; SHOULD BE CONSIDERED ARMED AND DANGEROUS &#9888;
+        </div>
+        <div class="modal-header">
+          <span class="modal-header-label">NBEP &nbsp;&#9632;&nbsp; Most Wanted &nbsp;&#9632;&nbsp; Fugitive Profile</span>
+          <button class="modal-close" id="modalClose">&#x2715;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-photo-col" id="modalPhotoCol">
+            <div class="photo-placeholder">&#128100;</div>
+          </div>
+          <div class="modal-info-col">
+            <p class="modal-section-label">Fugitive Identity</p>
+            <h2 class="modal-name" id="modalName"></h2>
+            <div class="modal-status-row">
+              <span class="modal-status-badge" id="modalAadBadge"></span>
+            </div>
+            <p class="modal-section-label">Caution</p>
+            <p class="modal-caution-text" id="modalCaution"></p>
+          </div>
+        </div>
+        <div class="modal-footer-bar">
+          NBEP &nbsp;&#9632;&nbsp; Active Fugitive File &nbsp;&#9632;&nbsp; If you have information, submit a tip at /submit-a-tip
+        </div>
+      </div>
+    </div>
+
+    <!-- custom context menu -->
+    <div class="custom-context-menu" id="ctxMenu">
+      <a href="/resources">Resources</a>
+      <a href="/submit-a-tip">Submit a Tip</a>
+      <a href="/info">What We Investigate</a>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <div class="footer-row">
+            <a class="footer-btn" href="/">HOME</a>
+            <a class="footer-btn" href="/wanted">MOST WANTED</a>
+            <a class="footer-btn" href="/news">NEWS</a>
+            <a class="footer-btn" href="/info">WHAT WE INVESTIGATE</a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/contact-us">CONTACT US</a>
+            <a class="footer-btn" href="/offices">OFFICES</a>
+            <a class="footer-btn" href="/software">SOFTWARE</a>
+            <a class="footer-btn" href="/documents">DOCUMENTS</a>
+          </div>
+          <div class="footer-row">
+            <a class="footer-btn" href="/archives">ARCHIVES</a>
+            <a class="footer-btn" href="/directors-roster">DIRECTORS ROSTER</a>
+            <a class="footer-btn" href="/help">HELP</a>
+            <a class="footer-btn" href="/admin">ADMINISTRATIVE SERVICES</a>
+          </div>
+          <div class="footer-social">
+            <img src="youtube.png" alt="youtube">
+            <img src="facebook.png" alt="facebook">
+            <img src="atlassian.png" alt="atlassian">
+            <img src="x.png" alt="x">
+          </div>
+          <div class="footer-text">
+            <p>NBEP&copy; 2026-2027. All rights reserved.</p>
+          </div>
+        </div>
+        <div class="footer-logo">
+          <img src="nbeplogo.png" class="footer-logo-img" alt="nbep logo">
+          <img src="nbep-text.png" class="footer-logo-img" alt="nbep text">
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("Version: Lakewood I.111");
+    </script>
+    <!-- firebase -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6KN09Nx7er5eFYLkCOimWGYLJtwuwXU0",
+        authDomain: "nbep-5039a.firebaseapp.com",
+        projectId: "nbep-5039a",
+        storageBucket: "nbep-5039a.firebasestorage.app",
+        messagingSenderId: "753495624185",
+        appId: "1:753495624185:web:8245b64f6c374794081528",
+        measurementId: "G-GRFMK30MVM"
+      };
+
+      const app       = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db        = getFirestore(app);
+
+      const stateMsg  = document.getElementById("stateMsg");
+      const grid      = document.getElementById("wantedGrid");
+      const overlay   = document.getElementById("modalOverlay");
+      const modalName     = document.getElementById("modalName");
+      const modalCaution  = document.getElementById("modalCaution");
+      const modalAadBanner = document.getElementById("modalAadBanner");
+      const modalAadBadge  = document.getElementById("modalAadBadge");
+      const modalPhotoCol  = document.getElementById("modalPhotoCol");
+      const modalClose     = document.getElementById("modalClose");
+
+      function openModal(fugitive) {
+        modalName.textContent    = fugitive.name || "Unknown";
+        modalCaution.textContent = fugitive.caution || "No additional information available.";
+
+        if (fugitive["armed-and-dangerous"]) {
+          modalAadBanner.classList.add("show");
+          modalAadBadge.textContent  = "Armed & Dangerous";
+          modalAadBadge.className    = "modal-status-badge badge-aad";
+        } else {
+          modalAadBanner.classList.remove("show");
+          modalAadBadge.textContent  = "Status: No AAD Warning";
+          modalAadBadge.className    = "modal-status-badge badge-safe";
+        }
+
+        if (fugitive.photo) {
+          modalPhotoCol.innerHTML = `<img src="${fugitive.photo}" alt="${fugitive.name}" onerror="this.parentElement.innerHTML='<div class=\\'photo-placeholder\\'>&#128100;</div>'">`;
+        } else {
+          modalPhotoCol.innerHTML = `<div class="photo-placeholder">&#128100;</div>`;
+        }
+
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      modalClose.addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+      function buildCard(fugitive) {
+        const card = document.createElement("div");
+        card.className = "wanted-card";
+
+        if (fugitive["armed-and-dangerous"]) {
+          const stripe = document.createElement("div");
+          stripe.className = "aad-stripe";
+          stripe.textContent = "ARMED & DANGEROUS";
+          card.appendChild(stripe);
+        }
+
+        const photoWrap = document.createElement("div");
+        photoWrap.className = "card-photo-wrap";
+        if (fugitive.photo) {
+          const img = document.createElement("img");
+          img.src = fugitive.photo;
+          img.alt = fugitive.name || "Fugitive";
+          img.onerror = () => {
+            photoWrap.innerHTML = `<div class="photo-placeholder">&#128100;</div>`;
+          };
+          photoWrap.appendChild(img);
+        } else {
+          photoWrap.innerHTML = `<div class="photo-placeholder">&#128100;</div>`;
+        }
+        card.appendChild(photoWrap);
+
+        const info = document.createElement("div");
+        info.className = "card-info";
+        info.innerHTML = `
+          <div class="card-name">${fugitive.name || "Unknown"}</div>
+          <div class="card-caution">${fugitive.caution || ""}</div>
+          <div class="card-view-btn">VIEW PROFILE &rsaquo;</div>
+        `;
+        card.appendChild(info);
+
+        card.addEventListener("click", () => openModal(fugitive));
+        return card;
+      }
+
+      async function loadWanted() {
+        try {
+          const snap = await getDocs(collection(db, "most-wanted"));
+          if (snap.empty) {
+            stateMsg.textContent = "No fugitive records found.";
+            return;
+          }
+          stateMsg.style.display = "none";
+          grid.style.display     = "grid";
+          snap.forEach(doc => {
+            const data = doc.data();
+            grid.appendChild(buildCard(data));
+          });
+        } catch (err) {
+          stateMsg.textContent = "Failed to load records. Please try again later.";
+          stateMsg.classList.add("error");
+          console.error(err);
+        }
+      }
+
+      loadWanted();
+
+      /* context menu */
+      const ctxMenu = document.getElementById("ctxMenu");
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        ctxMenu.style.display = "block";
+        const mw = ctxMenu.offsetWidth, mh = ctxMenu.offsetHeight;
+        const ww = window.innerWidth,   wh = window.innerHeight;
+        ctxMenu.style.left = (e.clientX + mw > ww) ? (ww - mw - 5) + "px" : e.clientX + "px";
+        ctxMenu.style.top  = (e.clientY + mh > wh) ? (wh - mh - 5) + "px" : e.clientY + "px";
+      });
+      document.addEventListener("click",  () => { ctxMenu.style.display = "none"; });
+      document.addEventListener("scroll", () => { ctxMenu.style.display = "none"; });
+
+    </script>
+  </body>
+</html>
