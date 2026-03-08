@@ -505,43 +505,38 @@
         color: white;
       }
 
-      /* Leadership Section */
+      /* leadership section */
       .leadership-section {
         text-align: center;
         margin: 40px auto;
       }
-
       .leadership-text {
         font-family: "Times New Roman", serif;
-        color: #1a3aaf; 
+        color: #1a3aaf;
         font-size: 22px;
         margin-bottom: 20px;
       }
-
       .leadership-images {
         display: flex;
         justify-content: center;
         gap: 20px;
         flex-wrap: wrap;
       }
-
       .leader-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 200px; 
-        background-color: #222; 
+        width: 200px;
+        background-color: #222;
         border-radius: 6px;
         padding: 10px;
       }
-
       .leader-box img {
         width: 160px !important;
         height: 200px;
         object-fit: cover;
         border-radius: 4px;
       }
-
       .leader-name {
         font-family: Arial, sans-serif;
         color: white;
@@ -549,39 +544,94 @@
         margin-top: 6px;
         text-align: center;
       }
+
+      /* i want to section - fbi.gov style */
+      .actions-section {
+        background-color: #1f2f5a;
+        padding: 40px 20px 50px;
+        text-align: center;
+        width: 100%;
+      }
+      .actions-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 28px;
+        font-weight: 400;
+        color: white;
+        margin: 0 0 36px 0;
+        letter-spacing: 0.5px;
+      }
+      .actions-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 48px;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        width: 100px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .action-btn img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        /* make images white like fbi.gov style */
+        filter: brightness(0) invert(1);
+      }
+      .action-btn a {
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        color: white;
+        text-align: center;
+        line-height: 1.4;
+        text-decoration: none;
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+        display: block;
+      }
+      .action-btn a:hover {
+        color: #ffd900;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
 
-    <!-- TOP BANNER -->
-    <div class="banner"> 
-      <img src="nbeplogo.png" alt="logo"> 
-      <img class="img2" src="usflag.png" alt="usflag"> 
-      <p>This is an official site of the NBEP. A non-profit non-government organization.</p> 
+    <!-- top banner -->
+    <div class="banner">
+      <img src="nbeplogo.png" alt="logo">
+      <img class="img2" src="usflag.png" alt="usflag">
+      <p>This is an official site of the NBEP. A non-profit non-government organization.</p>
       <a class="p2" href="https://sayroahm.github.io/nbep/howyouknow">?</a>
     </div>
 
-    <!-- TOOLBAR -->
+    <!-- toolbar -->
     <div class="toolbar">
-      <div class="dropdown-logo"> 
-        <img src="nbeplogo.png" alt="menu"> 
-        <div class="dropdown-menu"> 
-          <a href="#">Home</a> 
-          <a href="/wanted">Most Wanted</a> 
-          <a href="/submit-a-tip">Report Crime</a> 
-          <a href="/resources">Resources</a> 
+      <div class="dropdown-logo">
+        <img src="nbeplogo.png" alt="menu">
+        <div class="dropdown-menu">
+          <a href="#">Home</a>
+          <a href="/wanted">Most Wanted</a>
+          <a href="/submit-a-tip">Report Crime</a>
+          <a href="/resources">Resources</a>
           <a href="/contact-us">Contact</a>
         </div>
       </div>
-      <div class="toolbar-nav"> 
-        <a href="#">Home</a> 
-        <a href="/wanted">Most Wanted</a> 
-        <a href="/news">News</a> 
+      <div class="toolbar-nav">
+        <a href="#">Home</a>
+        <a href="/wanted">Most Wanted</a>
+        <a href="/news">News</a>
         <a href="/info">What We Investigate</a>
       </div>
       <div class="toolbar-search">
         <div class="search-box">
-          <img src="searchicon.png" alt="search"> 
+          <img src="searchicon.png" alt="search">
           <input type="text" placeholder="Search" id="toolbarSearch">
         </div>
       </div>
@@ -606,7 +656,7 @@
       </div>
     </div>
 
-    <!-- VISTA OVERLAY & WINDOW (fixed position: not in flow) -->
+    <!-- vista overlay & window -->
     <div class="vista-overlay" id="vistaOverlay"></div>
     <div class="vista-window" id="vistaHelp">
       <div class="vista-titlebar">
@@ -647,56 +697,57 @@
       </div>
     </div>
 
-    <!-- Leadership Section -->
-      <div class="leadership-section">
-        <p class="leadership-text">Leadership | Mission | Volunteers</p>
-        <div class="leadership-images">
-          <div class="leader-box">
-            <img src="HDNoPfp.png" alt="Leader 1">
-            <p class="leader-name">Director Evan S.</p>
-          </div>
-          <div class="leader-box">
-            <img src="HDNoPfp.png" alt="Leader 2">
-            <p class="leader-name">No Co-Director Appointed</p>
-          </div>
-          <div class="leader-box">
-            <img src="HDNoPfp.png" alt="Leader 3">
-            <p class="leader-name">No Chief Appointed</p>
-          </div>
-          <div class="leader-box">
-            <img src="HDNoPfp.png" alt="Leader 4">
-            <p class="leader-name">No Chief Luintenant 1 Appointed</p>
-          </div>
-          <div class="leader-box">
-            <img src="HDNoPfp.png" alt="Leader 5">
-            <p class="leader-name">No Chief Luintenant 2 Appointed</p>
-          </div>
+    <!-- leadership section -->
+    <div class="leadership-section">
+      <p class="leadership-text">Leadership | Mission | Volunteers</p>
+      <div class="leadership-images">
+        <div class="leader-box">
+          <img src="HDNoPfp.png" alt="Leader 1">
+          <p class="leader-name">Director Evan S.</p>
+        </div>
+        <div class="leader-box">
+          <img src="HDNoPfp.png" alt="Leader 2">
+          <p class="leader-name">No Co-Director Appointed</p>
+        </div>
+        <div class="leader-box">
+          <img src="HDNoPfp.png" alt="Leader 3">
+          <p class="leader-name">No Chief Appointed</p>
+        </div>
+        <div class="leader-box">
+          <img src="HDNoPfp.png" alt="Leader 4">
+          <p class="leader-name">No Chief Luintenant 1 Appointed</p>
+        </div>
+        <div class="leader-box">
+          <img src="HDNoPfp.png" alt="Leader 5">
+          <p class="leader-name">No Chief Luintenant 2 Appointed</p>
         </div>
       </div>
+    </div>
 
-      <div class="actions-section">
-        <p class="actions-title">I Want To</p>
-        <div class="actions-buttons">
-          <div class="action-btn">
-            <img src="imagery/Apply.png" alt="Action 1">
-            <span class="action-text">Apply as a Volunteer</span>
-          </div>
-          <div class="action-btn">
-            <img src="imagery/submittip.png" alt="Action 2">
-            <span class="action-text">Submit a Tip</span>
-          </div>
-          <div class="action-btn">
-            <img src="imagery/contactus.png" alt="Action 3">
-            <span class="action-text">Contact the NBEP</span>
-          </div>
-          <div class="action-btn">
-            <img src="imagery/softwaregain.png" alt="Action 4">
-            <span class="action-text">Gain Access to NBEP Software</span>
-          </div>
+    <!-- i want to section -->
+    <div class="actions-section">
+      <p class="actions-title">I Want To</p>
+      <div class="actions-buttons">
+        <div class="action-btn">
+          <img src="imagery/Apply.png" alt="Apply as a Volunteer">
+          <a href="/volunteer">Apply as a Volunteer</a>
+        </div>
+        <div class="action-btn">
+          <img src="imagery/submittip.png" alt="Submit a Tip">
+          <a href="/submit-a-tip">Submit a Tip</a>
+        </div>
+        <div class="action-btn">
+          <img src="imagery/contactus.png" alt="Contact the NBEP">
+          <a href="/contact-us">Contact the NBEP</a>
+        </div>
+        <div class="action-btn">
+          <img src="imagery/softwaregain.png" alt="Gain Access to NBEP Software">
+          <a href="/software">Gain Access to NBEP Software</a>
         </div>
       </div>
+    </div>
 
-    <!-- FOOTER -->
+    <!-- footer -->
     <div class="footer">
       <div class="footer-inner">
         <div class="footer-links">
@@ -736,7 +787,8 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.162");
+      // task 1: bumped version number from I.162 to I.163
+      console.log("Version: Lakewood I.163");
       console.log("Bug Report: Leadership Roster Hot-Fix");
 
       const hbBtn = document.getElementById("homeBannerBtn");
