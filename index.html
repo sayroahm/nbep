@@ -586,7 +586,7 @@
     </div>
 
     <script>
-      console.log("Version: Lakewood I.152");
+      console.log("Version: Lakewood I.153");
       console.log("Bug Report: Removed bugged gallery, added window opens to the Help context menu.");
 
       const hbBtn = document.getElementById("homeBannerBtn");
@@ -629,12 +629,13 @@
       });
 
       const pages = [
-        { url: "/",             title: "Home",                content: ["info", "help", "nbep", "commissioner"] },
-        { url: "/submit-a-tip", title: "Submit a Tip",        content: ["tip", "report", "crime", "submit"]     },
-        { url: "/news",         title: "News",                content: ["news", "update", "report", "press"]    },
-        { url: "/wanted",       title: "Most Wanted",         content: ["wanted", "criminal", "most wanted"]    },
-        { url: "/info",         title: "What We Investigate", content: ["info", "investigate", "what we do", "cyber"] },
-        { url: "/404",          title: "Page not found",      content: ["404", "page not found", "return home", "not live"] },
+        { url: "/",             title: "Home",                content: ["info", "help", "nbep", "commissioner"]                    },
+        { url: "/submit-a-tip", title: "Submit a Tip",        content: ["tip", "report", "crime", "submit"]                        },
+        { url: "/news",         title: "News",                content: ["news", "update", "report", "press"]                       },
+        { url: "/wanted",       title: "Most Wanted",         content: ["wanted", "criminal", "most wanted"]                       },
+        { url: "/info",         title: "What We Investigate", content: ["info", "investigate", "what we do", "cyber"]              },
+        { url: "/404",          title: "Page not found",      content: ["404", "page not found", "return home", "not live"]        },
+        { url: "/resources",    title: "Resources",           content: ["consult", "help", "cope", "software", "988", "resources"] }
       ];
 
       function fuzzyScore(a, b) {
