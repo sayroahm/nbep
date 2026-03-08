@@ -1,3 +1,4 @@
+<!-- resources.html -->
 <!doctype html>
 <html>
   <head>
@@ -21,7 +22,7 @@
         box-sizing: border-box;
       }
 
-      /* ─── Top Info Banner ─── */
+      /* Top Info Banner */
       .banner {
         width: 100%;
         display: flex;
@@ -56,7 +57,7 @@
         color: #000000;
       }
 
-      /* ─── Toolbar ─── */
+      /* Toolbar */
       .toolbar {
         background-color: #000000;
         height: 70px;
@@ -106,6 +107,14 @@
       .dropdown-logo:hover .dropdown-menu {
         display: block;
       }
+      .dropdown-logo::after {
+        content: '';
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+      }
 
       .toolbar-nav {
         display: flex;
@@ -130,7 +139,7 @@
         border-bottom: 2px solid #ffd900;
       }
 
-      /* ─── Toolbar Search ─── */
+      /* Toolbar Search */
       .toolbar-search {
         margin-left: auto;
         margin-right: 10px;
@@ -165,7 +174,7 @@
         font-family: Arial, sans-serif;
       }
 
-      /* ─── Home Banner ─── */
+      /* Home Banner */
       .home-banner {
         width: 100%;
         min-height: 250px;
@@ -235,7 +244,7 @@
         text-decoration: underline;
       }
 
-      /* ─── Warning / Disclaimer Box ─── */
+      /* Warning / Disclaimer Box */
       .home-warn {
         margin: 30px auto;
         max-width: 1200px;
@@ -273,7 +282,7 @@
         flex-shrink: 0;
       }
 
-      /* ─── Custom Context Menu ─── */
+      /* Custom Context Menu */
       .custom-context-menu {
         display: none;
         position: fixed;
@@ -302,7 +311,7 @@
         background-color: #f0eedc;
       }
 
-      /* ─── Vista Help Window ─── */
+      /* Vista Help Window */
       .vista-overlay {
         display: none;
         position: fixed;
@@ -637,7 +646,7 @@
 
 
     <script>
-      console.log("Version: Lakewood I.113");
+      console.log("Version: Lakewood I.116");
       console.log("Bug Report:");
 
       const contextMenu = document.createElement("div");
