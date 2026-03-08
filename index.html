@@ -16,6 +16,9 @@
         font-family: Arial;
         overflow-x: hidden;
         max-width: 100%;
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
       }
 
       * {
@@ -591,6 +594,7 @@
         <a href="/contact-us">Contact</a>
       </div>
     </div>
+      <div style="flex: 1;">
       <div class="toolbar-nav"> 
         <a href="#">Home</a> 
         <a href="/wanted">Most Wanted</a> 
@@ -659,7 +663,7 @@
         </div>
       </div>
     </div>
-
+    </div>
     <!-- footer -->
 
 <div class="footer">
@@ -710,8 +714,8 @@
 </div>
 
   <script>
-      console.log("Version: Lakewood I.155");
-      //console.log("Bug Report:");
+      console.log("Version: Lakewood I.157");
+      console.log("Bug Report: Fixed footer");
 
       const hbBtn = document.getElementById("homeBannerBtn");
       hbBtn.onclick = function() {
